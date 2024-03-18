@@ -1,22 +1,20 @@
-import { Avatar, Badge, Card, Layout, Menu, theme } from 'antd';
+import { Layout, theme } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
 
 import React from 'react';
-import { UserOutlined } from '@ant-design/icons';
+import SidebarMenu from './menu/SidebarMenu';
+import UsersList from './UsersList';
+import { observer } from 'mobx-react-lite';
+import usersStore from '../../store/users';
 
 const { Header, Content, Sider } = Layout;
-const { Meta } = Card;
 
-const items = new Array(3).fill(null).map((_, index) => ({
-    key: String(index + 1),
-    label: `nav ${index + 1}`,
-}));
-
-const AppLayout: React.FC = () => {
+const AppLayout: React.FC = observer(() => {
     const {
-        token: { colorBgContainer, colorBgLayout, borderRadiusLG },
+        token: { colorBgLayout },
     } = theme.useToken();
 
+    const isAuth = usersStore.isAuth;
     return (
         <Layout style={{ minHeight: '100vh' }}>
             <Header
@@ -29,63 +27,21 @@ const AppLayout: React.FC = () => {
                     alignItems: 'center',
                 }}
             >
-                <div style={{ color: 'white' }}>LOGO</div>
-                <Menu
-                    theme='dark'
-                    mode='horizontal'
-                    defaultSelectedKeys={['2']}
-                    items={items}
-                    style={{ flex: 1, minWidth: 0 }}
-                />
-                <div style={{ color: 'white' }}>person</div>
+                <Link to='/' style={{ color: 'white' }}>
+                    SoNET
+                </Link>
             </Header>
             <Layout>
                 <Sider width='25%' style={{ background: colorBgLayout }}>
-                    <Card>
-                        <Link to='/profile'>
-                            <Meta
-                                avatar={
-                                    <Badge dot>
-                                        <Avatar
-                                            shape='square'
-                                            icon={<UserOutlined />}
-                                        />
-                                    </Badge>
-                                }
-                                title='Name Surname'
-                                description='This is the description'
-                            />
-                        </Link>
-
-                        <Meta
-                            avatar={
-                                <Badge dot>
-                                    <Avatar
-                                        shape='square'
-                                        icon={<UserOutlined />}
-                                    />
-                                </Badge>
-                            }
-                            title='Name Surname'
-                            description='This is the description'
-                        />
-                    </Card>
+                    <SidebarMenu isAuth={isAuth} />
+                    {isAuth && <UsersList />}
                 </Sider>
-                <Content style={{ padding: '48px' }}>
-                    <div
-                        style={{
-                            padding: 24,
-                            minHeight: 380,
-                            background: colorBgContainer,
-                            borderRadius: borderRadiusLG,
-                        }}
-                    >
-                        <Outlet />
-                    </div>
+                <Content style={{ padding: '18px 40px' }}>
+                    <Outlet />
                 </Content>
             </Layout>
         </Layout>
     );
-};
+});
 
 export default AppLayout;
