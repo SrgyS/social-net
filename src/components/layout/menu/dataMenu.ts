@@ -17,9 +17,14 @@ export const dataMenu = [
         icon: Icons.FileTextOutlined,
         path: '/',
     },
-    // {
-    //     title: 'Выйти',
-    //     icon: Icons.LogoutOutlined,
-    //     path: '/',
-    // },
+    {
+        title: 'Сообщения',
+        icon: Icons.MessageOutlined,
+        path: '/messages',
+    },
+    {
+        title: 'Пользователи',
+        icon: Icons.TeamOutlined,
+        path: '/users',
+    },
 ];

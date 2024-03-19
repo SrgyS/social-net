@@ -1,6 +1,6 @@
 import { Button, Card, Form, Input } from 'antd';
 
-import { IAuthFormValues } from '../../../types';
+import { IAuthFormValues, IUser } from '../../../types';
 import usersStore from '../../../store/users';
 
 interface IAuthProps {
@@ -9,11 +9,16 @@ interface IAuthProps {
 }
 const Auth = ({ isLogin, onSubmit }: IAuthProps) => {
     const onFinish = (values: IAuthFormValues) => {
-        console.log('Received values:', values);
-        // Здесь можно добавить логику для обработки данных формы
-        usersStore.setAuthUser(values);
-        console.log('юзер в стор:', usersStore.authUser);
-        console.log('авторизация:', usersStore.isAuth);
+        const newUser: IUser = {
+            id: new Date().toString(),
+            username: values.name || '', 
+            email: values.email,
+            password: values.password,
+            isOnline: true,
+            friends: [],
+            posts: [],
+        };
+        usersStore.setAuthUser(newUser);
         onSubmit();
     };
 

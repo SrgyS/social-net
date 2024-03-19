@@ -2,7 +2,7 @@ import { Button, Card, Flex, Menu, Modal } from 'antd';
 import { FC, useState } from 'react';
 
 import Auth from '../../pages/auth/Auth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { dataMenu } from './dataMenu';
 import usersStore from '../../../store/users';
 
@@ -13,6 +13,8 @@ interface ISidebarMenuProps {
 const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
+
+    const navigate = useNavigate();
 
     const showLoginModal = () => {
         setIsLogin(true);
@@ -37,9 +39,7 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
 
     const onLogout = () => {
         usersStore.clearAuthUser();
-        console.log('onLogout');
-        console.log(usersStore.authUser);
-        console.log('store isAuth', usersStore.isAuth);
+        navigate('/');
     };
 
     return (
@@ -81,7 +81,7 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
                         title={isLogin ? 'Авторизация' : 'Регистрация'}
                         onOk={handleOk}
                         onCancel={handleCancel}
-                        footer={null} // Удаляем кнопки из модального окна
+                        footer={null}
                     >
                         <Auth isLogin={isLogin} onSubmit={handleSubmit} />
                     </Modal>

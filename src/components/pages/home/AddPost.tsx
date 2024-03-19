@@ -1,18 +1,18 @@
 import { Button, Input } from 'antd';
 import { ChangeEvent, FC, useState } from 'react';
-import { IPost, TypeSetState } from '../../../types';
 
-import { users } from '../../../data/users';
+import { IPost } from '../../../types';
+import { observer } from 'mobx-react-lite';
+import postsStore from '../../../store/posts';
+import usersStore from '../../../store/users';
 
 const { TextArea } = Input;
 
-interface IAddPost {
-    setPosts: TypeSetState<IPost[]>;
-}
-
-const AddPost: FC<IAddPost> = ({ setPosts }) => {
+const AddPost: FC = observer(() => {
     const [postText, setPostText] = useState('');
     const [isExpanded, setIsExpanded] = useState(false);
+
+    const currentUser = usersStore.authUser;
 
     const handlePostTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setPostText(e.target.value);
@@ -22,19 +22,15 @@ const AddPost: FC<IAddPost> = ({ setPosts }) => {
     };
 
     const handleSubmit = () => {
-        // Здесь вы можете добавить логику для отправки поста на сервер
         console.log('Текст поста:', postText);
-
-        setPosts((prev) => [
-            {
-                author: users[0],
-                content: postText,
-                createdAt: 'new Date()',
-                comments: [],
-                id: '',
-            },
-            ...prev,
-        ]);
+        const newPost: IPost = {
+            author: currentUser!,
+            content: postText,
+            createdAt: new Date().toISOString(),
+            comments: [],
+            id: Date.now().toString(),
+        };
+        postsStore.addPost(newPost);
         setPostText('');
         setIsExpanded(false);
     };
@@ -61,6 +57,6 @@ const AddPost: FC<IAddPost> = ({ setPosts }) => {
             )}
         </div>
     );
-};
+});
 
 export default AddPost;

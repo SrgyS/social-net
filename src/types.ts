@@ -36,8 +36,3 @@ export interface IAuthFormValues {
     password: string;
     confirmPassword?: string;
 }
-// export interface IMenuItem {
-//     title: string;
-//     icon: React.ReactNode;
-//     path: string;
-// }
