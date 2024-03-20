@@ -17,6 +17,8 @@ const Auth = ({ isLogin, onSubmit }: IAuthProps) => {
             isOnline: true,
             friends: [],
             posts: [],
+            inFriendRequest: [],
+            outFriendRequest: [],
         };
         usersStore.addUser(newUser);
         usersStore.setAuthUser(newUser);

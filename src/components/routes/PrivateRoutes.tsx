@@ -1,3 +1,4 @@
+import { Friends } from '../pages/friends/Friends';
 import Home from '../pages/home/Home';
 import Message from '../pages/message/Message';
 import { Navigate } from 'react-router-dom';

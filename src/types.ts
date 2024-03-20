@@ -11,6 +11,8 @@ export interface IUser {
     isOnline: boolean;
     friends: string[];
     posts?: string[];
+    inFriendRequest: string[];
+    outFriendRequest: string[];
 }
 
 export interface IPost {
@@ -19,7 +21,6 @@ export interface IPost {
     content: string;
     createdAt: string;
     likes?: string[];
-    comments: string[];
 }
 
 export interface IComment {

@@ -27,7 +27,6 @@ const AddPost: FC = observer(() => {
             author: currentUser!,
             content: postText,
             createdAt: new Date().toISOString(),
-            comments: [],
             id: Date.now().toString(),
         };
         postsStore.addPost(newPost);

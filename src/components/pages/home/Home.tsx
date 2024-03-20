@@ -1,17 +1,14 @@
-import { IUser } from '../../../types';
-
 import AddPost from './AddPost';
+import { IUser } from '../../../types';
 import PostCard from './PostCard';
-
 import commentsStore from '../../../store/comments';
 import { observer } from 'mobx-react-lite';
 import postsStore from '../../../store/posts';
-
 import usersStore from '../../../store/users';
 
 const Home = observer(() => {
-    const posts = postsStore.posts;
-    const comments = commentsStore.comments;
+    const posts = postsStore.allPosts;
+    const comments = commentsStore.allComments;
 
     let currentUser: IUser;
     if (usersStore.authUser) {

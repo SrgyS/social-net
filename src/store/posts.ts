@@ -1,42 +1,38 @@
 import { action, makeObservable, observable } from 'mobx';
+import {
+    loadDataFromLocalStorage,
+    saveDataToLocalStorage,
+} from '../utils/localStorageUtils';
 
 import { IPost } from '../types';
-import axios from 'axios';
+import { mockPosts } from '../mockData/mockData';
 
+const POSTS_KEY = 'posts';
 export class PostsStore {
     constructor() {
         makeObservable(this);
         this.loadPosts();
     }
-    @observable posts: IPost[] = [];
+    @observable allPosts: IPost[] = [];
 
     @action async loadPosts() {
-        try {
-            const response = await axios.get('http://localhost:3001/posts');
-            this.posts = response.data;
-        } catch (error) {
-            console.error('Ошибка при загрузке постов:', error);
+        const posts: IPost[] | null = loadDataFromLocalStorage(POSTS_KEY);
+        if (!posts) {
+            this.allPosts = mockPosts;
+            saveDataToLocalStorage(POSTS_KEY, this.allPosts);
+        } else {
+            this.allPosts = posts as IPost[];
         }
     }
+
     @action async addPost(post: IPost) {
-        try {
-            const response = await axios.post(
-                'http://localhost:3001/posts',
-                post
-            );
-            this.posts.push(response.data);
-        } catch (error) {
-            console.error('Ошибка при добавлении поста:', error);
-        }
+        this.allPosts.push(post);
+        saveDataToLocalStorage(POSTS_KEY, this.allPosts);
     }
 
     @action async deletePost(postId: string) {
-        try {
-            await axios.delete(`http://localhost:3001/posts/${postId}`);
-            this.posts = this.posts.filter((post) => post.id !== postId);
-        } catch (error) {
-            console.error('Ошибка при удалении поста:', error);
-        }
+        this.allPosts = this.allPosts.filter((post) => post.id !== postId);
+        saveDataToLocalStorage(POSTS_KEY, this.allPosts);
     }
 }
 

@@ -1,8 +1,9 @@
-import { Layout, theme } from 'antd';
+import { Button, Layout, theme } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
 
 import SidebarMenu from './menu/SidebarMenu';
 import auth from '../../store/auth';
+import { clearLocalStorage } from '../../utils/clearLocalStorage';
 import { observer } from 'mobx-react-lite';
 import usersStore from '../../store/users';
 
@@ -23,11 +24,15 @@ const AppLayout = observer(() => {
                     width: '100%',
                     display: 'flex',
                     alignItems: 'center',
+                    justifyContent: 'space-between',
                 }}
             >
                 <Link to='/' style={{ color: 'white' }}>
                     SoNET
                 </Link>
+                <Button onClick={clearLocalStorage} ghost>
+                    Очистить local storage
+                </Button>
             </Header>
             <Layout>
                 <Sider width='25%' style={{ background: colorBgLayout }}>

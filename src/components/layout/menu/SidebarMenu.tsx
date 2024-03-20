@@ -50,8 +50,8 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
                         style={{ marginLeft: '10px', marginBottom: '20px' }}
                     >
                         <Avatar>
-                            {' '}
-                            {getNameLetter(usersStore.authUser.username)}
+                            {usersStore.authUser &&
+                                getNameLetter(usersStore.authUser.username)}
                         </Avatar>
                         <div style={{ marginLeft: '8px' }}>
                             <Typography.Text>
@@ -72,7 +72,7 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
                         }))}
                         style={{ borderInlineEnd: 'none' }}
                     />
-                    <Button type='link' onClick={onLogout}>
+                    <Button ghost onClick={onLogout}>
                         Выйти
                     </Button>
                 </>
@@ -84,9 +84,6 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
                         </Button>
                         <Button onClick={showRegisterModal} type='default'>
                             Зарегистрироваться
-                        </Button>
-                        <Button type='link' onClick={onLogout}>
-                            Выйти
                         </Button>
                     </Flex>
                     <Modal

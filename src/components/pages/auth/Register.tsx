@@ -13,7 +13,6 @@ const Register = ({ onSubmit }: IAuthProps) => {
         );
 
         if (existingUser) {
-            // Выводим ошибку, если пользователь с таким email уже существует
             message.error('Пользователь с таким email уже существует');
         } else {
             const newUser: IUser = {
@@ -24,6 +23,8 @@ const Register = ({ onSubmit }: IAuthProps) => {
                 isOnline: true,
                 friends: [],
                 posts: [],
+                inFriendRequest:[],
+                outFriendRequest: []
             };
 
             usersStore.addUser(newUser);

@@ -177,6 +177,15 @@
       "isOnline": true,
       "friends": [],
       "posts": []
+    },
+    {
+      "id": "2024-03-20T10:26:19.882Z",
+      "username": "Ваня",
+      "email": "test232@admin.com",
+      "password": "123",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
     }
   ],
   "posts": [

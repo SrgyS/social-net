@@ -2,18 +2,26 @@ import { Avatar, Button, Card } from 'antd';
 import { MessageOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { FC } from 'react';
+import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
 import usersStore from '../../../store/users';
 
-const UserProfile: FC = () => {
+const UserProfile: FC = observer(() => {
     const { id } = useParams<{ id: string }>();
     const user = usersStore.allUsers.find((user) => user.id === id);
-    const authUser = usersStore.authUser;
+    // const authUser = usersStore.authUser;
+
+    const isFriendRequestSent = user
+        ? usersStore.isFriendRequestSent(user)
+        : false;
+    const isFriend = user ? usersStore.isFriend(user) : false;
+
     const handleAddFriend = () => {
-        if (authUser && user) {
-            usersStore.addFriend(authUser.id, user.id);
+        if (user && !isFriend && !isFriendRequestSent) {
+            usersStore.addFriend(usersStore.authUser!.id, user.id);
         }
     };
+
     return (
         <Card title='User Profile'>
             <div
@@ -33,13 +41,16 @@ const UserProfile: FC = () => {
                     <p>Email: {user?.email}</p>
                 </div>
             </div>
+
             <h3>Posts:</h3>
+
             {/* <ul>
-                {user.posts &&
-                    user.posts.map((post, index) => (
-                        <li key={index}>{post}</li>
-                    ))}
-            </ul> */}
+        {user.posts && 
+          user.posts.map((post, index) => (
+            <li key={index}>{post}</li>
+          ))}
+      </ul> */}
+
             <div style={{ marginTop: '1rem' }}>
                 <Button
                     icon={<MessageOutlined />}
@@ -47,12 +58,21 @@ const UserProfile: FC = () => {
                 >
                     Написать сообщение
                 </Button>
-                <Button icon={<PlusOutlined />} onClick={handleAddFriend}>
-                    Добавить в друзья
-                </Button>
+
+                {!isFriend && (
+                    <Button
+                        icon={<PlusOutlined />}
+                        onClick={handleAddFriend}
+                        disabled={isFriendRequestSent}
+                    >
+                        {isFriendRequestSent
+                            ? 'Запрос отправлен'
+                            : 'Добавить в друзья'}
+                    </Button>
+                )}
             </div>
         </Card>
     );
-};
+});
 
 export default UserProfile;
