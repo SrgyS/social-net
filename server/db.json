@@ -168,6 +168,15 @@
       "isOnline": true,
       "friends": [],
       "posts": []
+    },
+    {
+      "id": "2024-03-20T09:11:56.622Z",
+      "username": "Петя",
+      "email": "test1@admin.com",
+      "password": "123",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
     }
   ],
   "posts": [
@@ -229,6 +238,21 @@
       },
       "content": "Работает",
       "createdAt": "2024-03-19T18:20:17.389Z",
+      "comments": []
+    },
+    {
+      "id": "1710926059398",
+      "author": {
+        "id": "Tue Mar 19 2024 14:41:24 GMT+0300 (Москва, стандартное время)",
+        "username": "Петя",
+        "email": "test@admin.com",
+        "password": "123",
+        "isOnline": true,
+        "friends": [],
+        "posts": []
+      },
+      "content": "Пост ",
+      "createdAt": "2024-03-20T09:14:19.398Z",
       "comments": []
     }
   ],

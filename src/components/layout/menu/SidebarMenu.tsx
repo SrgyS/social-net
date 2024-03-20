@@ -1,11 +1,11 @@
-import { Button, Card, Flex, Menu, Modal } from 'antd';
+import { Avatar, Button, Card, Flex, Menu, Modal, Typography } from 'antd';
 import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import Auth from '../../pages/auth/Auth';
 import Login from '../../pages/auth/Login';
 import Register from '../../pages/auth/Register';
 import { dataMenu } from './dataMenu';
+import { getNameLetter } from '../../../utils/getNameLetter';
 import usersStore from '../../../store/users';
 
 interface ISidebarMenuProps {
@@ -44,6 +44,21 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
         <Card>
             {isAuth ? (
                 <>
+                    {' '}
+                    <Flex
+                        justify='start'
+                        style={{ marginLeft: '10px', marginBottom: '20px' }}
+                    >
+                        <Avatar>
+                            {' '}
+                            {getNameLetter(usersStore.authUser.username)}
+                        </Avatar>
+                        <div style={{ marginLeft: '8px' }}>
+                            <Typography.Text>
+                                {usersStore.authUser?.username}
+                            </Typography.Text>
+                        </div>
+                    </Flex>
                     <Menu
                         mode='vertical'
                         items={dataMenu.map((item) => ({
