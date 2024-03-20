@@ -36,3 +36,7 @@ export interface IAuthFormValues {
     password: string;
     confirmPassword?: string;
 }
+export interface ILoginFormValues {
+    email: string;
+    password: string;
+}

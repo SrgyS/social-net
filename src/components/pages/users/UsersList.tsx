@@ -2,10 +2,11 @@ import { Avatar, Badge, Card, Menu } from 'antd';
 
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageOutlined } from '@ant-design/icons';
-import { users } from '../../../data/users';
+import { observer } from 'mobx-react-lite';
+import usersStore from '../../../store/users';
 
-const UsersList: FC = () => {
+const UsersList: FC = observer(() => {
+    const users = usersStore.allUsers;
     return (
         <Card>
             <Menu
@@ -32,6 +33,6 @@ const UsersList: FC = () => {
             />
         </Card>
     );
-};
+});
 
 export default UsersList;

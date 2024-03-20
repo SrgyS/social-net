@@ -1,6 +1,6 @@
 import { Button, Card, Form, Input } from 'antd';
-
 import { IAuthFormValues, IUser } from '../../../types';
+
 import usersStore from '../../../store/users';
 
 interface IAuthProps {
@@ -10,14 +10,15 @@ interface IAuthProps {
 const Auth = ({ isLogin, onSubmit }: IAuthProps) => {
     const onFinish = (values: IAuthFormValues) => {
         const newUser: IUser = {
-            id: new Date().toString(),
-            username: values.name || '', 
+            id: new Date().toISOString(),
+            username: values.name || '',
             email: values.email,
             password: values.password,
             isOnline: true,
             friends: [],
             posts: [],
         };
+        usersStore.addUser(newUser);
         usersStore.setAuthUser(newUser);
         onSubmit();
     };

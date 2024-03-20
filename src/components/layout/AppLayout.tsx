@@ -2,7 +2,6 @@ import { Layout, theme } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
 
 import SidebarMenu from './menu/SidebarMenu';
-import UsersList from '../pages/users/UsersList';
 import auth from '../../store/auth';
 import { observer } from 'mobx-react-lite';
 import usersStore from '../../store/users';

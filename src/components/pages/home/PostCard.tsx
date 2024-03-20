@@ -1,4 +1,4 @@
-import { Avatar, Badge, Card, Flex, Input } from 'antd';
+import { Avatar, Card, Flex, Input } from 'antd';
 import {
     CommentOutlined,
     DeleteOutlined,
@@ -8,8 +8,11 @@ import { IComment, IPost, IUser } from '../../../types';
 import React, { useState } from 'react';
 
 import commentsStore from '../../../store/comments';
+import { formatPostDate } from '../../../utils/formatPostDate';
+import { getNameLetter } from '../../../utils/getNameLetter';
 import { observer } from 'mobx-react-lite';
 import postsStore from '../../../store/posts';
+import usersStore from '../../../store/users';
 
 interface IPostProps {
     post: IPost;
@@ -21,7 +24,7 @@ interface IPostProps {
 const PostCard: React.FC<IPostProps> = observer(
     ({ post, currentUser, isAuth, comments = [] }) => {
         const { author, content, createdAt, id } = post;
-
+        const authUser = usersStore.authUser;
         const [showComments, setShowComments] = useState(false);
         const [newComment, setNewComment] = useState('');
 
@@ -53,40 +56,45 @@ const PostCard: React.FC<IPostProps> = observer(
         };
 
         const handleDeletePost = () => {
-            console.log('post id', id);
-            postsStore.deletePost(id);
+            if (authUser && author.id === authUser.id) {
+                postsStore.deletePost(id);
+            }
         };
+
+        const isAuthor = authUser && author.id === authUser.id;
 
         return (
             <>
                 <Card
                     style={{ marginTop: 20 }}
                     actions={[
-                        <Badge
-                            count={hasComments ? postComments.length : 0}
-                            overflowCount={99}
-                            size='small'
-                        >
+                        <div key='comment' onClick={handleShowComments}>
+                            {hasComments ? postComments.length : ''}
                             <CommentOutlined
-                                key='setting'
-                                onClick={handleShowComments}
                                 style={{
+                                    marginLeft: 5,
                                     color: hasComments
                                         ? '#1890ff'
                                         : 'rgba(0, 0, 0, 0.25)',
                                 }}
                             />
-                        </Badge>,
-                        <DeleteOutlined
-                            key='delete'
-                            onClick={handleDeletePost}
-                        />,
+                        </div>,
+                        isAuthor && isAuth && (
+                            <DeleteOutlined
+                                key='delete'
+                                onClick={handleDeletePost}
+                            />
+                        ),
                     ]}
                 >
                     <Card.Meta
-                        avatar={<Avatar src={author.avatarUrl} size='large' />}
+                        avatar={
+                            <Avatar size='large'>
+                                {getNameLetter(author.username)}
+                            </Avatar>
+                        }
                         title={author.username}
-                        description={createdAt}
+                        description={formatPostDate(createdAt)}
                     />
                     <p style={{ fontSize: '1.5rem' }}>{content}</p>
                 </Card>

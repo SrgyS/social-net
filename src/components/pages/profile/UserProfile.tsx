@@ -1,14 +1,19 @@
 import { Avatar, Button, Card } from 'antd';
-import { UserOutlined, MessageOutlined, PlusOutlined } from '@ant-design/icons';
-import { IUser } from '../../../types';
+import { MessageOutlined, PlusOutlined } from '@ant-design/icons';
+
+import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import usersStore from '../../../store/users';
-import { FC } from 'react';
 
 const UserProfile: FC = () => {
     const { id } = useParams<{ id: string }>();
     const user = usersStore.allUsers.find((user) => user.id === id);
-
+    const authUser = usersStore.authUser;
+    const handleAddFriend = () => {
+        if (authUser && user) {
+            usersStore.addFriend(authUser.id, user.id);
+        }
+    };
     return (
         <Card title='User Profile'>
             <div
@@ -42,7 +47,9 @@ const UserProfile: FC = () => {
                 >
                     Написать сообщение
                 </Button>
-                <Button icon={<PlusOutlined />}>Добавить в друзья</Button>
+                <Button icon={<PlusOutlined />} onClick={handleAddFriend}>
+                    Добавить в друзья
+                </Button>
             </div>
         </Card>
     );

@@ -1,8 +1,10 @@
 import { Button, Card, Flex, Menu, Modal } from 'antd';
 import { FC, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Auth from '../../pages/auth/Auth';
-import { Link, useNavigate } from 'react-router-dom';
+import Login from '../../pages/auth/Login';
+import Register from '../../pages/auth/Register';
 import { dataMenu } from './dataMenu';
 import usersStore from '../../../store/users';
 
@@ -25,14 +27,6 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
         setIsModalOpen(true);
     };
 
-    const handleOk = () => {
-        console.log('handleOk');
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
-
     const handleSubmit = () => {
         setIsModalOpen(false);
     };
@@ -40,6 +34,10 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
     const onLogout = () => {
         usersStore.clearAuthUser();
         navigate('/');
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
     };
 
     return (
@@ -79,11 +77,14 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
                     <Modal
                         open={isModalOpen}
                         title={isLogin ? 'Авторизация' : 'Регистрация'}
-                        onOk={handleOk}
-                        onCancel={handleCancel}
                         footer={null}
+                        onCancel={handleCancel}
                     >
-                        <Auth isLogin={isLogin} onSubmit={handleSubmit} />
+                        {isLogin ? (
+                            <Login onSubmit={handleSubmit} />
+                        ) : (
+                            <Register onSubmit={handleSubmit} />
+                        )}
                     </Modal>
                 </>
             )}
