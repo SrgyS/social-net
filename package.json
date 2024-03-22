@@ -13,9 +13,11 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.1",
+    "@ant-design/pro-chat": "^1.12.1",
     "@mobx-devtools/tools": "^0.0.4",
     "@types/react-router-dom": "^5.3.3",
     "antd": "^5.15.2",
+    "antd-style": "^3.6.1",
     "axios": "^1.6.8",
     "date-fns": "^3.6.0",
     "mobx": "^6.12.0",

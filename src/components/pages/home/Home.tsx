@@ -7,7 +7,7 @@ import postsStore from '../../../store/posts';
 import usersStore from '../../../store/users';
 
 const Home = observer(() => {
-    const posts = postsStore.allPosts;
+    const posts = [...postsStore.allPosts].reverse();
     const comments = commentsStore.allComments;
 
     let currentUser: IUser;
@@ -17,10 +17,10 @@ const Home = observer(() => {
 
     return (
         <>
-            {usersStore.isAuth ? <AddPost /> : null}
+            {usersStore.authUser ? <AddPost /> : null}
             {posts.map((post) => (
                 <PostCard
-                    isAuth={usersStore.isAuth}
+                    isAuth={!!usersStore.authUser}
                     post={post}
                     key={post.id}
                     currentUser={currentUser}

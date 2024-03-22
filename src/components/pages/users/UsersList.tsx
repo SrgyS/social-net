@@ -6,7 +6,10 @@ import { observer } from 'mobx-react-lite';
 import usersStore from '../../../store/users';
 
 const UsersList: FC = observer(() => {
-    const users = usersStore.allUsers;
+    const { authUser } = usersStore;
+    const users = usersStore.allUsers.filter(
+        (user) => user.id !== authUser?.id
+    );
     return (
         <Card>
             <Menu

@@ -1,10 +1,12 @@
 import * as Icons from '@ant-design/icons';
 
-export const dataMenu = [
+import { getProfilePath } from '../../../utils/getProfilePath';
+
+export const dataMenu = (userId: string) => [
     {
         title: 'Моя страница',
         icon: Icons.HomeOutlined,
-        path: '/profile',
+        path: userId ? getProfilePath(userId) : '/',
     },
 
     {

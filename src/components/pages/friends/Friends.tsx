@@ -3,16 +3,16 @@ import { FC, useState } from 'react';
 
 import { UserOutlined } from '@ant-design/icons';
 import { getUsers } from '../../../utils/getUsers';
-import usersStore from '../../../store/users';
 import { observer } from 'mobx-react-lite';
+import usersStore from '../../../store/users';
 
 export const Friends: FC = observer(() => {
     const [showFriendRequest, setShowFriendRequest] = useState(false);
 
-    const { authUser, friendRequests } = usersStore;
-
+    const { authUser } = usersStore;
+    const usersSentRequest = authUser?.inFriendRequest;
     const friends = getUsers(authUser?.friends || []);
-    const friendsRequest = getUsers(friendRequests || []);
+    const friendsRequest = getUsers(usersSentRequest || []);
     const handleConfirmFriendRequest = (id: string) => {
         if (authUser) {
             usersStore.confirmFriendRequest(authUser.id, id);
@@ -29,7 +29,7 @@ export const Friends: FC = observer(() => {
             Друзья
             <Badge
                 color='blue'
-                count={friendRequests.length}
+                count={friendsRequest.length}
                 offset={[-25, 25]}
             >
                 <div style={{ padding: '20px' }}>

@@ -1,4 +1,6 @@
-export const mockUsers = [
+import { IComment, IPost, IUser } from '../types';
+
+export const mockUsers: IUser[] = [
     {
         id: '1',
         username: 'John',
@@ -10,6 +12,7 @@ export const mockUsers = [
         friends: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: '2',
@@ -21,6 +24,7 @@ export const mockUsers = [
         friends: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: '3',
@@ -34,6 +38,7 @@ export const mockUsers = [
         ],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: '4',
@@ -45,6 +50,7 @@ export const mockUsers = [
         friends: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: 'Tue Mar 19 2024 14:41:24 GMT+0300 (Москва, стандартное время)',
@@ -56,6 +62,7 @@ export const mockUsers = [
         posts: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: 'Tue Mar 19 2024 14:42:45 GMT+0300 (Москва, стандартное время)',
@@ -67,6 +74,7 @@ export const mockUsers = [
         posts: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: 'Tue Mar 19 2024 14:47:23 GMT+0300 (Москва, стандартное время)',
@@ -80,6 +88,7 @@ export const mockUsers = [
         posts: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: 'Tue Mar 19 2024 15:26:56 GMT+0300 (Москва, стандартное время)',
@@ -94,6 +103,7 @@ export const mockUsers = [
         posts: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: 'Tue Mar 19 2024 20:07:39 GMT+0300 (Москва, стандартное время)',
@@ -105,6 +115,7 @@ export const mockUsers = [
         posts: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: 'Tue Mar 19 2024 20:13:00 GMT+0300 (Москва, стандартное время)',
@@ -116,6 +127,7 @@ export const mockUsers = [
         posts: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: 'Tue Mar 19 2024 20:18:59 GMT+0300 (Москва, стандартное время)',
@@ -127,6 +139,7 @@ export const mockUsers = [
         posts: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: 'Tue Mar 19 2024 20:24:40 GMT+0300 (Москва, стандартное время)',
@@ -138,6 +151,7 @@ export const mockUsers = [
         posts: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: 'Tue Mar 19 2024 21:04:38 GMT+0300 (Москва, стандартное время)',
@@ -149,6 +163,7 @@ export const mockUsers = [
         posts: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: 'Tue Mar 19 2024 21:17:09 GMT+0300 (Москва, стандартное время)',
@@ -160,6 +175,7 @@ export const mockUsers = [
         posts: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: 'Tue Mar 19 2024 21:18:47 GMT+0300 (Москва, стандартное время)',
@@ -171,6 +187,7 @@ export const mockUsers = [
         posts: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: 'Tue Mar 19 2024 21:19:54 GMT+0300 (Москва, стандартное время)',
@@ -182,6 +199,7 @@ export const mockUsers = [
         posts: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: '2024-03-19T18:25:18.125Z',
@@ -193,6 +211,7 @@ export const mockUsers = [
         posts: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: '2024-03-19T18:25:34.177Z',
@@ -204,6 +223,7 @@ export const mockUsers = [
         posts: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
     {
         id: '2024-03-20T09:11:56.622Z',
@@ -215,10 +235,11 @@ export const mockUsers = [
         posts: [],
         inFriendRequest: [],
         outFriendRequest: [],
+        unreadMessages: [],
     },
 ];
 
-export const mockPosts = [
+export const mockPosts: IPost[] = [
     {
         id: '1710872333965',
         author: {
@@ -231,10 +252,11 @@ export const mockPosts = [
             posts: [],
             inFriendRequest: [],
             outFriendRequest: [],
+            unreadMessages: [],
         },
         content: 'werf',
         createdAt: '2024-03-19T18:18:53.965Z',
-        comments: [],
+        imgUrls: [],
     },
     {
         id: '1710872359073',
@@ -248,10 +270,11 @@ export const mockPosts = [
             posts: [],
             inFriendRequest: [],
             outFriendRequest: [],
+            unreadMessages: [],
         },
         content: 'Новый пост\n\n',
         createdAt: '2024-03-19T18:19:19.073Z',
-        comments: [],
+        imgUrls: [],
     },
     {
         id: '1710872408963',
@@ -265,10 +288,11 @@ export const mockPosts = [
             posts: [],
             inFriendRequest: [],
             outFriendRequest: [],
+            unreadMessages: [],
         },
         content: 'Проверка',
         createdAt: '2024-03-19T18:20:08.963Z',
-        comments: [],
+        imgUrls: [],
     },
     {
         id: '1710872417389',
@@ -282,10 +306,11 @@ export const mockPosts = [
             posts: [],
             inFriendRequest: [],
             outFriendRequest: [],
+            unreadMessages: [],
         },
         content: 'Работает',
         createdAt: '2024-03-19T18:20:17.389Z',
-        comments: [],
+        imgUrls: [],
     },
     {
         id: '1710926059398',
@@ -299,14 +324,15 @@ export const mockPosts = [
             posts: [],
             inFriendRequest: [],
             outFriendRequest: [],
+            unreadMessages: [],
         },
         content: 'Пост ',
         createdAt: '2024-03-20T09:14:19.398Z',
-        comments: [],
+        imgUrls: [],
     },
 ];
 
-export const mockComments = [
+export const mockComments: IComment[] = [
     {
         author: {
             id: '2t',
@@ -318,6 +344,7 @@ export const mockComments = [
             friends: [],
             inFriendRequest: [],
             outFriendRequest: [],
+            unreadMessages: [],
         },
         createdAt: '2024-03-19T17:54:56.131Z',
         id: '23',
@@ -335,6 +362,7 @@ export const mockComments = [
             friends: [],
             inFriendRequest: [],
             outFriendRequest: [],
+            unreadMessages: [],
         },
         createdAt: '2024-03-19T17:54:56.131Z',
         id: '213',
@@ -352,6 +380,7 @@ export const mockComments = [
             friends: [],
             inFriendRequest: [],
             outFriendRequest: [],
+            unreadMessages: [],
         },
         createdAt: '2024-03-19T17:54:56.131Z',
         id: '123',
@@ -369,6 +398,7 @@ export const mockComments = [
             friends: [],
             inFriendRequest: [],
             outFriendRequest: [],
+            unreadMessages: [],
         },
         createdAt: '2024-03-19T17:54:56.131Z',
         id: '2113',
@@ -386,10 +416,49 @@ export const mockComments = [
             friends: [],
             inFriendRequest: [],
             outFriendRequest: [],
+            unreadMessages: [],
         },
         createdAt: '2024-03-19T17:54:56.131Z',
         id: '1223',
         content: 'comment test wwww',
         postId: '2323',
+    },
+];
+
+export const mockMessages = [
+    {
+        senderId: '1',
+        receiverId: '2',
+        text: 'Message 1 from John to Pete',
+        timestamp: 1648121840000,
+        id: '2024-03-23T08:04:00.000Z',
+    },
+    {
+        senderId: '1',
+        receiverId: '2',
+        text: 'Message 2 from John to Pete',
+        timestamp: 1648185720000,
+        id: '2024-03-24T00:22:00.000Z',
+    },
+    {
+        senderId: '1',
+        receiverId: '3',
+        text: 'Message 1 from John to Ann',
+        timestamp: 1648147320000,
+        id: '2024-03-23T15:15:20.000Z',
+    },
+    {
+        senderId: '2',
+        receiverId: '3',
+        text: 'Message 1 from Pete to Ann',
+        timestamp: 1648147380000,
+        id: '2024-03-23T15:16:20.000Z',
+    },
+    {
+        senderId: '3',
+        receiverId: '4',
+        text: 'Message 1 from Ann to Tom',
+        timestamp: 1648147440000,
+        id: '2024-03-23T15:17:20.000Z',
     },
 ];

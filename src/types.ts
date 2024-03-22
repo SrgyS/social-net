@@ -13,6 +13,7 @@ export interface IUser {
     posts?: string[];
     inFriendRequest: string[];
     outFriendRequest: string[];
+    unreadMessages: string[];
 }
 
 export interface IPost {
@@ -20,7 +21,7 @@ export interface IPost {
     id: string;
     content: string;
     createdAt: string;
-    likes?: string[];
+    imgUrls: string[] | null;
 }
 
 export interface IComment {
@@ -36,8 +37,17 @@ export interface IAuthFormValues {
     email: string;
     password: string;
     confirmPassword?: string;
+    avatarUrl?: string;
 }
 export interface ILoginFormValues {
     email: string;
     password: string;
+}
+
+export interface IMessage {
+    senderId: string;
+    receiverId: string;
+    text: string;
+    timestamp: number;
+    id: string;
 }

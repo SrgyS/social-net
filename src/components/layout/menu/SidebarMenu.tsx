@@ -1,23 +1,31 @@
-import { Avatar, Button, Card, Flex, Menu, Modal, Typography } from 'antd';
+import {
+    Avatar,
+    Badge,
+    Button,
+    Card,
+    Flex,
+    Menu,
+    Modal,
+    Typography,
+} from 'antd';
 import { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Login from '../../pages/auth/Login';
 import Register from '../../pages/auth/Register';
+import { UserOutlined } from '@ant-design/icons';
 import { dataMenu } from './dataMenu';
-import { getNameLetter } from '../../../utils/getNameLetter';
 import usersStore from '../../../store/users';
 
 interface ISidebarMenuProps {
     isAuth: boolean;
 }
-
 const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
 
     const navigate = useNavigate();
-
+    const { authUser } = usersStore;
     const showLoginModal = () => {
         setIsLogin(true);
         setIsModalOpen(true);
@@ -40,6 +48,8 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
         setIsModalOpen(false);
     };
 
+    const menuItems = authUser?.id ? dataMenu(authUser.id) : [];
+
     return (
         <Card>
             {isAuth ? (
@@ -49,10 +59,11 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
                         justify='start'
                         style={{ marginLeft: '10px', marginBottom: '20px' }}
                     >
-                        <Avatar>
-                            {usersStore.authUser &&
-                                getNameLetter(usersStore.authUser.username)}
-                        </Avatar>
+                        <Avatar
+                            style={{ backgroundColor: '#87d068' }}
+                            icon={<UserOutlined />}
+                            src={usersStore.authUser?.avatarUrl}
+                        />
                         <div style={{ marginLeft: '8px' }}>
                             <Typography.Text>
                                 {usersStore.authUser?.username}
@@ -61,9 +72,26 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
                     </Flex>
                     <Menu
                         mode='vertical'
-                        items={dataMenu.map((item) => ({
+                        items={menuItems.map((item) => ({
                             key: item.path,
-                            label: <Link to={item.path}>{item.title}</Link>,
+                            label: (
+                                <Badge
+                                    color='blue'
+                                    style={{
+                                        margin: '6px -15px',
+                                        cursor: 'pointer',
+                                    }}
+                                    count={
+                                        item.path === '/messages'
+                                            ? usersStore.authUser
+                                                  ?.unreadMessages.length || 0
+                                            : 0
+                                    }
+                                    overflowCount={99}
+                                >
+                                    <Link to={item.path}>{item.title}</Link>
+                                </Badge>
+                            ),
                             icon: (
                                 <item.icon
                                     style={{ fontSize: '16px', color: '#08c' }}
@@ -72,7 +100,12 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
                         }))}
                         style={{ borderInlineEnd: 'none' }}
                     />
-                    <Button ghost onClick={onLogout}>
+                    <Button
+                        type='primary'
+                        ghost
+                        onClick={onLogout}
+                        style={{ margin: '20px 20px' }}
+                    >
                         Выйти
                     </Button>
                 </>

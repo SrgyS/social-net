@@ -1,7 +1,9 @@
-import { Button, Input } from 'antd';
+import { Button, Input, Upload } from 'antd';
 import { ChangeEvent, FC, useState } from 'react';
+import { UploadChangeParam, UploadFile } from 'antd/es/upload/interface';
 
 import { IPost } from '../../../types';
+import { InboxOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
 import postsStore from '../../../store/posts';
 import usersStore from '../../../store/users';
@@ -11,6 +13,7 @@ const { TextArea } = Input;
 const AddPost: FC = observer(() => {
     const [postText, setPostText] = useState('');
     const [isExpanded, setIsExpanded] = useState(false);
+    const [fileList, setFileList] = useState<UploadFile[]>([]);
 
     const currentUser = usersStore.authUser;
 
@@ -22,16 +25,27 @@ const AddPost: FC = observer(() => {
     };
 
     const handleSubmit = () => {
-        console.log('Текст поста:', postText);
+        const imgUrls = fileList.map((file) =>
+            file.originFileObj ? URL.createObjectURL(file.originFileObj) : ''
+        ) as string[];
+
         const newPost: IPost = {
             author: currentUser!,
             content: postText,
             createdAt: new Date().toISOString(),
-            id: Date.now().toString(),
+            id: new Date().toISOString(),
+            imgUrls,
         };
         postsStore.addPost(newPost);
         setPostText('');
+        setFileList([]);
         setIsExpanded(false);
+    };
+    const handleUploadChange = ({
+        fileList: newFileList,
+    }: UploadChangeParam) => {
+        setFileList(newFileList);
+        console.log('upload', fileList);
     };
 
     return (
@@ -45,6 +59,15 @@ const AddPost: FC = observer(() => {
             />
             {isExpanded && (
                 <div style={{ marginTop: 8 }}>
+                    <Upload
+                        listType='picture'
+                        maxCount={3}
+                        onChange={(file) => handleUploadChange(file)}
+                    >
+                        <Button icon={<InboxOutlined />}>
+                            Загрузить изображение
+                        </Button>
+                    </Upload>
                     <Button
                         type='primary'
                         style={{ marginLeft: 8, marginTop: 8 }}

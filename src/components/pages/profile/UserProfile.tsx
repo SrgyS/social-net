@@ -1,24 +1,43 @@
 import { Avatar, Button, Card } from 'antd';
-import { MessageOutlined, PlusOutlined } from '@ant-design/icons';
+import { Link, useParams } from 'react-router-dom';
+import {
+    MessageOutlined,
+    MinusOutlined,
+    PlusOutlined,
+} from '@ant-design/icons';
 
 import { FC } from 'react';
+import { IUser } from '../../../types';
+import PostCard from '../home/PostCard';
+import commentsStore from '../../../store/comments';
 import { observer } from 'mobx-react-lite';
-import { useParams } from 'react-router-dom';
+import postsStore from '../../../store/posts';
 import usersStore from '../../../store/users';
 
 const UserProfile: FC = observer(() => {
+    const { isFriendRequestSent, isFriend } = usersStore;
     const { id } = useParams<{ id: string }>();
     const user = usersStore.allUsers.find((user) => user.id === id);
-    // const authUser = usersStore.authUser;
+    let currentUser: IUser;
+    if (usersStore.authUser) {
+        currentUser = usersStore.authUser;
+    }
 
-    const isFriendRequestSent = user
-        ? usersStore.isFriendRequestSent(user)
-        : false;
-    const isFriend = user ? usersStore.isFriend(user) : false;
+    const isRequestSent = user ? isFriendRequestSent(user) : false;
+    const friend = user ? isFriend(user) : false;
+
+    const userPosts = user ? postsStore.getUserPosts(user.id) : [];
+    const comments = commentsStore.allComments;
 
     const handleAddFriend = () => {
-        if (user && !isFriend && !isFriendRequestSent) {
-            usersStore.addFriend(usersStore.authUser!.id, user.id);
+        if (user) {
+            usersStore.addFriendRequest(usersStore.authUser!.id, user.id);
+        }
+    };
+
+    const handleDeleteFriend = () => {
+        if (user) {
+            usersStore.deleteFriend(currentUser.id, user.id);
         }
     };
 
@@ -31,43 +50,56 @@ const UserProfile: FC = observer(() => {
                     marginBottom: '1rem',
                 }}
             >
-                <Avatar
-                    src={user?.avatarUrl}
-                    size={64}
-                    // icon={<UserOutlined />}
-                />
+                {user && <Avatar src={user.avatarUrl} size={64} />}
                 <div style={{ marginLeft: '1rem' }}>
-                    <h2>{user?.username}</h2>
-                    <p>Email: {user?.email}</p>
+                    {user && (
+                        <>
+                            <h2>{user.username}</h2>
+                            <p>Email: {user.email}</p>
+                        </>
+                    )}
                 </div>
             </div>
 
             <h3>Posts:</h3>
 
-            {/* <ul>
-        {user.posts && 
-          user.posts.map((post, index) => (
-            <li key={index}>{post}</li>
-          ))}
-      </ul> */}
+            {userPosts?.map((post) => (
+                <PostCard
+                    isAuth={!!usersStore.authUser}
+                    post={post}
+                    key={post.id}
+                    currentUser={currentUser}
+                    comments={comments}
+                />
+            ))}
 
             <div style={{ marginTop: '1rem' }}>
                 <Button
                     icon={<MessageOutlined />}
                     style={{ marginRight: '0.5rem' }}
                 >
-                    Написать сообщение
+                    <Link to={`/messages/${id}`}>Написать сообщение</Link>
                 </Button>
 
-                {!isFriend && (
+                {!friend && user && (
                     <Button
                         icon={<PlusOutlined />}
                         onClick={handleAddFriend}
-                        disabled={isFriendRequestSent}
+                        disabled={isRequestSent}
                     >
-                        {isFriendRequestSent
+                        {isRequestSent
                             ? 'Запрос отправлен'
                             : 'Добавить в друзья'}
+                    </Button>
+                )}
+                {friend && (
+                    <Button
+                        danger
+                        icon={<MinusOutlined />}
+                        onClick={handleDeleteFriend}
+                        disabled={isRequestSent}
+                    >
+                        Удалить из друзей
                     </Button>
                 )}
             </div>

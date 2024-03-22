@@ -1,15 +1,14 @@
-import { Avatar, Card, Flex, Input } from 'antd';
+import { Avatar, Button, Card, Flex, Image, Input, Space } from 'antd';
 import {
     CommentOutlined,
     DeleteOutlined,
-    SendOutlined,
+    UserOutlined,
 } from '@ant-design/icons';
 import { IComment, IPost, IUser } from '../../../types';
 import React, { useState } from 'react';
 
 import commentsStore from '../../../store/comments';
 import { formatPostDate } from '../../../utils/formatPostDate';
-import { getNameLetter } from '../../../utils/getNameLetter';
 import { observer } from 'mobx-react-lite';
 import postsStore from '../../../store/posts';
 import usersStore from '../../../store/users';
@@ -43,7 +42,7 @@ const PostCard: React.FC<IPostProps> = observer(
         const handleAddComment = () => {
             if (newComment.trim() !== '') {
                 const newCommentData = {
-                    id: String(Date.now()),
+                    id: new Date().toISOString(),
                     postId: post.id,
                     author: currentUser,
                     createdAt: new Date().toISOString(),
@@ -87,11 +86,20 @@ const PostCard: React.FC<IPostProps> = observer(
                         ),
                     ]}
                 >
+                    <Space>
+                        {post.imgUrls &&
+                            post.imgUrls.map((imgUrl) => (
+                                <Image key={imgUrl} src={imgUrl} width={250} />
+                            ))}
+                    </Space>
+
                     <Card.Meta
                         avatar={
-                            <Avatar size='large'>
-                                {getNameLetter(author.username)}
-                            </Avatar>
+                            <Avatar
+                                style={{ backgroundColor: '#87d068' }}
+                                icon={<UserOutlined />}
+                                src={author?.avatarUrl}
+                            />
                         }
                         title={author.username}
                         description={formatPostDate(createdAt)}
@@ -122,22 +130,26 @@ const PostCard: React.FC<IPostProps> = observer(
                             avatar={<Avatar src={currentUser.avatarUrl} />}
                             description={
                                 <Flex gap={10}>
-                                    <Input.TextArea
-                                        rows={1}
-                                        placeholder='Добавить комментарий...'
-                                        value={newComment}
-                                        onChange={(e) =>
-                                            setNewComment(e.target.value)
-                                        }
-                                        onPressEnter={handleAddComment}
-                                    />
-                                    <SendOutlined
-                                        style={{ cursor: 'pointer' }}
-                                        onClick={handleAddComment}
-                                        disabled={
-                                            !isAuth || newComment.trim() === ''
-                                        }
-                                    />
+                                    <Space.Compact style={{ width: '100%' }}>
+                                        <Input
+                                            placeholder='Добавить комментарий...'
+                                            value={newComment}
+                                            onChange={(e) =>
+                                                setNewComment(e.target.value)
+                                            }
+                                            onPressEnter={handleAddComment}
+                                        />
+                                        <Button
+                                            type='primary'
+                                            onClick={handleAddComment}
+                                            disabled={
+                                                !isAuth ||
+                                                newComment.trim() === ''
+                                            }
+                                        >
+                                            Отправить
+                                        </Button>
+                                    </Space.Compact>
                                 </Flex>
                             }
                         />

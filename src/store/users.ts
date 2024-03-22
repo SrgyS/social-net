@@ -1,23 +1,25 @@
+import { IMessage, IUser } from '../types';
 import { action, computed, makeObservable, observable } from 'mobx';
 import {
     loadDataFromLocalStorage,
     saveDataToLocalStorage,
 } from '../utils/localStorageUtils';
-import { IUser } from '../types';
-import { mockUsers } from '../mockData/mockData';
+import { mockMessages, mockUsers } from '../mockData/mockData';
 
 const USERS_KEY = 'users';
+const MESSAGES_KEY = 'messages';
 
 export class UsersStore {
     constructor() {
         makeObservable(this);
         this.loadUsers();
+        this.loadMessages();
     }
 
     @observable authUser: IUser | null = null;
-    @observable isAuth = false;
     @observable allUsers: IUser[] = [];
     @observable friendRequests: string[] = [];
+    @observable messages: IMessage[] = [];
 
     @action loadUsers() {
         const users = loadDataFromLocalStorage<IUser[]>(USERS_KEY) || mockUsers;
@@ -25,20 +27,19 @@ export class UsersStore {
         saveDataToLocalStorage(USERS_KEY, this.allUsers);
     }
 
-    @action setAuthUser(user: IUser) {
-        this.authUser = user;
-        this.isAuth = true;
-        this.setFriendRequests();
+    @action loadMessages() {
+        const messages =
+            loadDataFromLocalStorage<IMessage[]>(MESSAGES_KEY) || mockMessages;
+        this.messages = messages;
+        saveDataToLocalStorage(MESSAGES_KEY, this.messages);
     }
 
-    @action setFriendRequests() {
-        this.friendRequests = this.authUser?.inFriendRequest || [];
+    @action setAuthUser(user: IUser) {
+        this.authUser = user;
     }
 
     @action clearAuthUser() {
         this.authUser = null;
-        this.isAuth = false;
-        this.friendRequests = [];
     }
 
     @action addUser(user: IUser) {
@@ -46,18 +47,21 @@ export class UsersStore {
         saveDataToLocalStorage(USERS_KEY, this.allUsers);
     }
 
-    @action deleteUser(userId: string) {
-        this.allUsers = this.allUsers.filter((user) => user.id !== userId);
-        saveDataToLocalStorage(USERS_KEY, this.allUsers);
-    }
+    // @action deleteUser(userId: string) {
+    //     this.allUsers = this.allUsers.filter((user) => user.id !== userId);
+    //     saveDataToLocalStorage(USERS_KEY, this.allUsers);
+    // }
 
-    @action addFriend(currentUserId: string, friendId: string) {
+    @action addFriendRequest(currentUserId: string, friendId: string) {
         const [friendUser, currentUser] = this.getUsers(
             currentUserId,
             friendId
         );
-        friendUser?.inFriendRequest.push(currentUserId);
-        currentUser?.outFriendRequest.push(friendId);
+        if (currentUser && friendUser) {
+            friendUser.inFriendRequest.push(currentUserId);
+            currentUser.outFriendRequest.push(friendId);
+            this.setAuthUser(currentUser);
+        }
         saveDataToLocalStorage(USERS_KEY, this.allUsers);
     }
 
@@ -75,12 +79,28 @@ export class UsersStore {
             friendUser.outFriendRequest = friendUser.outFriendRequest.filter(
                 (id) => id !== currentUserId
             );
-            this.removeFriendRequest(friendId);
-            this.setFriendRequests();
-            this.authUser = currentUser;
+            this.setAuthUser(currentUser);
             saveDataToLocalStorage(USERS_KEY, this.allUsers);
         }
     }
+    @action deleteFriend(currentUserId: string, friendId: string) {
+        const [friendUser, currentUser] = this.getUsers(
+            currentUserId,
+            friendId
+        );
+        if (currentUser && friendUser) {
+            currentUser.friends = currentUser.friends.filter(
+                (user) => user !== friendId
+            );
+            friendUser.friends = friendUser.friends.filter(
+                (user) => user !== currentUserId
+            );
+
+            this.setAuthUser(currentUser);
+            saveDataToLocalStorage(USERS_KEY, this.allUsers);
+        }
+    }
+
     @action cancelFriendRequest(currentUserId: string, friendId: string) {
         const [friendUser, currentUser] = this.getUsers(
             currentUserId,
@@ -93,26 +113,19 @@ export class UsersStore {
             friendUser.outFriendRequest = friendUser.outFriendRequest.filter(
                 (id) => id !== currentUserId
             );
-            this.removeFriendRequest(friendId);
-            this.setFriendRequests();
             this.authUser = currentUser;
             saveDataToLocalStorage(USERS_KEY, this.allUsers);
         }
     }
 
-    @action addFriendRequest(userId: string) {
-        this.friendRequests.push(userId);
-    }
-
-    @action removeFriendRequest(userId: string) {
-        this.friendRequests = this.friendRequests.filter((id) => id !== userId);
-    }
-
     @computed get isFriendRequestSent() {
-        return (user: IUser) =>
-            this.authUser?.outFriendRequest.includes(user.id) || false;
+        return (user: IUser) => {
+            return !!(
+                this.authUser &&
+                this.authUser.outFriendRequest.includes(user.id)
+            );
+        };
     }
-
     @computed get isFriend() {
         return (user: IUser) => {
             if (this.authUser && user) {
@@ -123,6 +136,67 @@ export class UsersStore {
             }
             return false;
         };
+    }
+
+    @action sendMessage(message: IMessage) {
+        this.messages.push(message);
+        saveDataToLocalStorage(MESSAGES_KEY, this.messages);
+
+        const receiverUser = this.allUsers.find(
+            (user: IUser) => user.id === message.receiverId
+        );
+
+        if (receiverUser) {
+            receiverUser.unreadMessages.push(message.id);
+            saveDataToLocalStorage(USERS_KEY, this.allUsers);
+        }
+    }
+
+    @computed get getConversation() {
+        return (senderId: string, receiverId: string) => {
+            return this.messages.filter(
+                (message) =>
+                    (message.senderId === senderId &&
+                        message.receiverId === receiverId) ||
+                    (message.senderId === receiverId &&
+                        message.receiverId === senderId)
+            );
+        };
+    }
+
+    @computed get getUnreadMessagesCount() {
+        return (userId: string) => {
+            const receivedMessages = this.messages.filter(
+                (message) =>
+                    message.receiverId === this.authUser?.id &&
+                    message.senderId === userId
+            );
+            const unreadMessagesCount = receivedMessages.filter(
+                (message) =>
+                    this.authUser?.unreadMessages.includes(message.id) || false
+            ).length;
+            return unreadMessagesCount;
+        };
+    }
+
+    @action markMessagesAsRead(userId: string) {
+        const currentUser = this.allUsers?.find(
+            (user) => user.id === this.authUser?.id
+        );
+        const otherUser = this.allUsers.find((user) => user.id === userId);
+
+        if (currentUser && otherUser) {
+            const conversation = this.getConversation(
+                currentUser.id,
+                otherUser.id
+            );
+            currentUser.unreadMessages = currentUser.unreadMessages.filter(
+                (messageId) =>
+                    !conversation.some((message) => message.id === messageId)
+            );
+
+            saveDataToLocalStorage(USERS_KEY, this.allUsers);
+        }
     }
 
     private getUsers(currentUserId: string, friendId: string) {

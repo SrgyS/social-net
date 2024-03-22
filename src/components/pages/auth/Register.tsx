@@ -1,12 +1,16 @@
-import { Button, Card, Form, Input, message } from 'antd';
+import { Button, Card, Form, Input, Upload, message } from 'antd';
 import { IAuthFormValues, IUser } from '../../../types';
+import { UploadChangeParam, UploadFile } from 'antd/es/upload';
 
+import { InboxOutlined } from '@ant-design/icons';
+import { useState } from 'react';
 import usersStore from '../../../store/users';
 
 interface IAuthProps {
     onSubmit: () => void;
 }
 const Register = ({ onSubmit }: IAuthProps) => {
+    const [fileList, setFileList] = useState<UploadFile[]>([]);
     const onFinish = (values: IAuthFormValues) => {
         const existingUser = usersStore.allUsers.find(
             (user) => user.email === values.email
@@ -15,6 +19,11 @@ const Register = ({ onSubmit }: IAuthProps) => {
         if (existingUser) {
             message.error('Пользователь с таким email уже существует');
         } else {
+            const avatarUrl = fileList.map((file) =>
+                file.originFileObj
+                    ? URL.createObjectURL(file.originFileObj)
+                    : ''
+            ) as string[];
             const newUser: IUser = {
                 id: new Date().toISOString(),
                 username: values.name || '',
@@ -23,15 +32,24 @@ const Register = ({ onSubmit }: IAuthProps) => {
                 isOnline: true,
                 friends: [],
                 posts: [],
-                inFriendRequest:[],
-                outFriendRequest: []
+                inFriendRequest: [],
+                outFriendRequest: [],
+                unreadMessages: [],
+                avatarUrl: avatarUrl[0] || '',
             };
-
+            console.log('user', newUser);
             usersStore.addUser(newUser);
             usersStore.setAuthUser(newUser);
             onSubmit();
         }
     };
+
+    const handleUploadChange = ({
+        fileList: newFileList,
+    }: UploadChangeParam) => {
+        setFileList(newFileList);
+    };
+
     return (
         <Card>
             <Form onFinish={onFinish} layout='vertical' preserve={false}>
@@ -102,6 +120,14 @@ const Register = ({ onSubmit }: IAuthProps) => {
                 >
                     <Input.Password />
                 </Form.Item>
+
+                <Upload
+                    listType='picture'
+                    maxCount={1}
+                    onChange={(file) => handleUploadChange(file)}
+                >
+                    <Button icon={<InboxOutlined />}>Загрузить аватар</Button>
+                </Upload>
 
                 <Form.Item>
                     <Button type='primary' htmlType='submit' block>
