@@ -54,8 +54,8 @@ export const mockUsers: IUser[] = [
     },
     {
         id: 'Tue Mar 19 2024 14:41:24 GMT+0300 (Москва, стандартное время)',
-        username: 'Петя',
-        email: 'test@admin.com',
+        username: 'Ира Качалкина',
+        email: 'te@admin.com',
         password: '123',
         isOnline: true,
         friends: [],
@@ -66,8 +66,8 @@ export const mockUsers: IUser[] = [
     },
     {
         id: 'Tue Mar 19 2024 14:42:45 GMT+0300 (Москва, стандартное время)',
-        username: 'Петя',
-        email: 'test@admin.com',
+        username: 'Дима Пирогов',
+        email: 'test@com.com',
         password: '123',
         isOnline: true,
         friends: [],
@@ -79,7 +79,7 @@ export const mockUsers: IUser[] = [
     {
         id: 'Tue Mar 19 2024 14:47:23 GMT+0300 (Москва, стандартное время)',
         username: 'Игорь',
-        email: 'test@admin.com',
+        email: 'tet@admin.com',
         password: '12345',
         isOnline: true,
         friends: [
@@ -107,8 +107,8 @@ export const mockUsers: IUser[] = [
     },
     {
         id: 'Tue Mar 19 2024 20:07:39 GMT+0300 (Москва, стандартное время)',
-        username: 'Петя',
-        email: 'test@admin.com',
+        username: 'Рома Маркин',
+        email: 'ost@admin.com',
         password: '123',
         isOnline: true,
         friends: [],
@@ -120,7 +120,7 @@ export const mockUsers: IUser[] = [
     {
         id: 'Tue Mar 19 2024 20:13:00 GMT+0300 (Москва, стандартное время)',
         username: 'Peter',
-        email: 'test@admin.com',
+        email: 'test-p@admin.com',
         password: '111',
         isOnline: true,
         friends: [],
@@ -131,8 +131,8 @@ export const mockUsers: IUser[] = [
     },
     {
         id: 'Tue Mar 19 2024 20:18:59 GMT+0300 (Москва, стандартное время)',
-        username: 'Peter',
-        email: 'test@admin.com',
+        username: 'Peter SPb',
+        email: 'teswt@admin.com',
         password: '123',
         isOnline: true,
         friends: [],
@@ -144,7 +144,7 @@ export const mockUsers: IUser[] = [
     {
         id: 'Tue Mar 19 2024 20:24:40 GMT+0300 (Москва, стандартное время)',
         username: 'John',
-        email: 'test@admin.com',
+        email: 'testee@admin.com',
         password: '111',
         isOnline: true,
         friends: [],
@@ -156,7 +156,7 @@ export const mockUsers: IUser[] = [
     {
         id: 'Tue Mar 19 2024 21:04:38 GMT+0300 (Москва, стандартное время)',
         username: 'Ваня новый',
-        email: 'test@admin.com',
+        email: 'testre@admin.com',
         password: '111',
         isOnline: true,
         friends: [],
@@ -168,7 +168,7 @@ export const mockUsers: IUser[] = [
     {
         id: 'Tue Mar 19 2024 21:17:09 GMT+0300 (Москва, стандартное время)',
         username: 'rocky',
-        email: 'test@admin.com',
+        email: 'test@mail.com',
         password: '111',
         isOnline: true,
         friends: [],
@@ -180,7 +180,7 @@ export const mockUsers: IUser[] = [
     {
         id: 'Tue Mar 19 2024 21:18:47 GMT+0300 (Москва, стандартное время)',
         username: 'Ваня',
-        email: 'test@admin.com',
+        email: 'spn@admin.com',
         password: '111',
         isOnline: true,
         friends: [],
@@ -192,7 +192,7 @@ export const mockUsers: IUser[] = [
     {
         id: 'Tue Mar 19 2024 21:19:54 GMT+0300 (Москва, стандартное время)',
         username: 'Ира Петрова',
-        email: 'test@admin.com',
+        email: 'topt@admin.com',
         password: '12345',
         isOnline: true,
         friends: [],
@@ -203,8 +203,8 @@ export const mockUsers: IUser[] = [
     },
     {
         id: '2024-03-19T18:25:18.125Z',
-        username: 'Rocky',
-        email: 'test@admin.com',
+        username: 'Rocky 4',
+        email: 'teest@admin.com',
         password: '123',
         isOnline: true,
         friends: [],
@@ -227,7 +227,7 @@ export const mockUsers: IUser[] = [
     },
     {
         id: '2024-03-20T09:11:56.622Z',
-        username: 'Петя',
+        username: 'Педро Родригес',
         email: 'test1@admin.com',
         password: '123',
         isOnline: true,

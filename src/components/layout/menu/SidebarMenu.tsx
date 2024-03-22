@@ -3,6 +3,7 @@ import { FC, useState } from 'react';
 
 import { BadgeWithCount } from './BadgeWithCount';
 import Login from '../../pages/auth/Login';
+import { MenuInfo } from 'rc-menu/lib/interface';
 import Register from '../../pages/auth/Register';
 import { UserOutlined } from '@ant-design/icons';
 import { dataMenu } from './dataMenu';
@@ -49,6 +50,9 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
         '/messages': authUser?.unreadMessages.length || 0,
         '/friends': authUser?.inFriendRequest.length || 0,
     };
+    const handleMenuClick = (e: MenuInfo) => {
+        navigate(e.key);
+    };
 
     return (
         <Card>
@@ -70,12 +74,12 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
                         </div>
                     </Flex>
                     <Menu
+                        onClick={handleMenuClick}
                         mode='vertical'
                         items={menuItems.map((item) => ({
                             key: item.path,
                             label: (
                                 <BadgeWithCount
-                                    path={item.path}
                                     count={countsByPath[item.path]}
                                     title={item.title}
                                 />

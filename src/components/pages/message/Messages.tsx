@@ -7,8 +7,13 @@ import { observer } from 'mobx-react-lite';
 import usersStore from '../../../store/users';
 
 const Messages: FC = observer(() => {
-    const { authUser, allUsers, getConversation, getUnreadMessagesCount } =
-        usersStore;
+    const {
+        authUser,
+        allUsers,
+        getConversation,
+        getUnreadMessagesCount,
+        markMessagesAsRead,
+    } = usersStore;
 
     const conversationUsers: IUser[] = authUser
         ? allUsers.filter((user) => {
@@ -35,9 +40,7 @@ const Messages: FC = observer(() => {
                         title={
                             <Link
                                 to={`/messages/${user.id}`}
-                                onClick={() =>
-                                    usersStore.markMessagesAsRead(user.id)
-                                }
+                                onClick={() => markMessagesAsRead(user.id)}
                             >
                                 {user.username}
                             </Link>
