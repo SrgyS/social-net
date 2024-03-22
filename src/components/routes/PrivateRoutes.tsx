@@ -1,22 +1,19 @@
-import AppLayout from '../layout/AppLayout';
+import Conversation from '../pages/message/Conversation';
+import { Friends } from '../pages/friends/Friends';
 import Home from '../pages/home/Home';
-import Message from '../pages/message/Message';
+import Message from '../pages/message/Messages';
 import { Navigate } from 'react-router-dom';
 import UserProfile from '../pages/profile/UserProfile';
 import UsersList from '../pages/users/UsersList';
 
 export default function privateRoutes() {
-    return {
-        path: '/',
-        element: <AppLayout />,
-
-        children: [
-            { path: '/', element: <Home /> },
-            { path: '/profile/:id', element: <UserProfile /> },
-            { path: '/messages', element: <Message /> },
-            { path: '/friends', element: <Message /> },
-            { path: '/users', element: <UsersList /> },
-            { path: '*', element: <Navigate to='/' replace /> },
-        ],
-    };
+    return [
+        { path: '/', element: <Home /> },
+        { path: '/profile/:id', element: <UserProfile /> },
+        { path: '/messages', element: <Message /> },
+        { path: '/messages/:id', element: <Conversation /> },
+        { path: '/friends', element: <Friends /> },
+        { path: '/users', element: <UsersList /> },
+        { path: '*', element: <Navigate to='/' replace /> },
+    ];
 }

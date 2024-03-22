@@ -1,21 +1,23 @@
-import { Button, Card, Flex, Menu, Modal } from 'antd';
+import { Avatar, Button, Card, Flex, Menu, Modal, Typography } from 'antd';
 import { FC, useState } from 'react';
 
-import Auth from '../../pages/auth/Auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { BadgeWithCount } from './BadgeWithCount';
+import Login from '../../pages/auth/Login';
+import Register from '../../pages/auth/Register';
+import { UserOutlined } from '@ant-design/icons';
 import { dataMenu } from './dataMenu';
+import { useNavigate } from 'react-router-dom';
 import usersStore from '../../../store/users';
 
 interface ISidebarMenuProps {
     isAuth: boolean;
 }
-
 const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
 
     const navigate = useNavigate();
-
+    const { authUser } = usersStore;
     const showLoginModal = () => {
         setIsLogin(true);
         setIsModalOpen(true);
@@ -23,14 +25,6 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
     const showRegisterModal = () => {
         setIsLogin(false);
         setIsModalOpen(true);
-    };
-
-    const handleOk = () => {
-        console.log('handleOk');
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
     };
 
     const handleSubmit = () => {
@@ -42,24 +36,66 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
         navigate('/');
     };
 
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    const menuItems = authUser?.id ? dataMenu(authUser.id) : [];
+
+    interface CountsByPath {
+        [key: string]: number;
+    }
+    const countsByPath: CountsByPath = {
+        '/messages': authUser?.unreadMessages.length || 0,
+        '/friends': authUser?.inFriendRequest.length || 0,
+    };
+
     return (
         <Card>
             {isAuth ? (
                 <>
+                    <Flex
+                        justify='start'
+                        style={{ marginLeft: '10px', marginBottom: '20px' }}
+                    >
+                        <Avatar
+                            style={{ backgroundColor: '#87d068' }}
+                            icon={<UserOutlined />}
+                            src={usersStore.authUser?.avatarUrl}
+                        />
+                        <div style={{ marginLeft: '8px' }}>
+                            <Typography.Text>
+                                {usersStore.authUser?.username}
+                            </Typography.Text>
+                        </div>
+                    </Flex>
                     <Menu
                         mode='vertical'
-                        items={dataMenu.map((item) => ({
+                        items={menuItems.map((item) => ({
                             key: item.path,
-                            label: <Link to={item.path}>{item.title}</Link>,
+                            label: (
+                                <BadgeWithCount
+                                    path={item.path}
+                                    count={countsByPath[item.path]}
+                                    title={item.title}
+                                />
+                            ),
                             icon: (
                                 <item.icon
                                     style={{ fontSize: '16px', color: '#08c' }}
                                 />
                             ),
                         }))}
-                        style={{ borderInlineEnd: 'none' }}
+                        style={{
+                            borderInlineEnd: 'none',
+                        }}
                     />
-                    <Button type='link' onClick={onLogout}>
+                    <Button
+                        type='primary'
+                        ghost
+                        onClick={onLogout}
+                        style={{ margin: '20px 20px' }}
+                    >
                         Выйти
                     </Button>
                 </>
@@ -72,18 +108,18 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
                         <Button onClick={showRegisterModal} type='default'>
                             Зарегистрироваться
                         </Button>
-                        <Button type='link' onClick={onLogout}>
-                            Выйти
-                        </Button>
                     </Flex>
                     <Modal
                         open={isModalOpen}
                         title={isLogin ? 'Авторизация' : 'Регистрация'}
-                        onOk={handleOk}
-                        onCancel={handleCancel}
                         footer={null}
+                        onCancel={handleCancel}
                     >
-                        <Auth isLogin={isLogin} onSubmit={handleSubmit} />
+                        {isLogin ? (
+                            <Login onSubmit={handleSubmit} />
+                        ) : (
+                            <Register onSubmit={handleSubmit} />
+                        )}
                     </Modal>
                 </>
             )}

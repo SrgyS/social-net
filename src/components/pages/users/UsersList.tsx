@@ -2,10 +2,15 @@ import { Avatar, Badge, Card, Menu } from 'antd';
 
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageOutlined } from '@ant-design/icons';
-import { users } from '../../../data/users';
+import { UserOutlined } from '@ant-design/icons';
+import { observer } from 'mobx-react-lite';
+import usersStore from '../../../store/users';
 
-const UsersList: FC = () => {
+const UsersList: FC = observer(() => {
+    const { authUser } = usersStore;
+    const users = usersStore.allUsers.filter(
+        (user) => user.id !== authUser?.id
+    );
     return (
         <Card>
             <Menu
@@ -23,7 +28,12 @@ const UsersList: FC = () => {
                                 dot={user.isOnline}
                                 style={{ backgroundColor: '#52c41a' }}
                             >
-                                <Avatar src={user.avatarUrl} size='small' />
+                                <Avatar
+                                    src={user.avatarUrl}
+                                    size='small'
+                                    style={{ backgroundColor: '#87d068' }}
+                                    icon={<UserOutlined />}
+                                />
                             </Badge>
                         ),
                     })),
@@ -32,6 +42,6 @@ const UsersList: FC = () => {
             />
         </Card>
     );
-};
+});
 
 export default UsersList;

@@ -1,15 +1,19 @@
-import { Avatar, Badge, Card, Flex, Input } from 'antd';
+import { Avatar, Button, Card, Flex, Image, Input, Space } from 'antd';
 import {
     CommentOutlined,
     DeleteOutlined,
-    SendOutlined,
+    UserOutlined,
 } from '@ant-design/icons';
 import { IComment, IPost, IUser } from '../../../types';
 import React, { useState } from 'react';
 
+import CommentCard from './CommentCard';
+import { Link } from 'react-router-dom';
 import commentsStore from '../../../store/comments';
+import { formatPostDate } from '../../../utils/formatPostDate';
 import { observer } from 'mobx-react-lite';
 import postsStore from '../../../store/posts';
+import usersStore from '../../../store/users';
 
 interface IPostProps {
     post: IPost;
@@ -21,7 +25,7 @@ interface IPostProps {
 const PostCard: React.FC<IPostProps> = observer(
     ({ post, currentUser, isAuth, comments = [] }) => {
         const { author, content, createdAt, id } = post;
-
+        const authUser = usersStore.authUser;
         const [showComments, setShowComments] = useState(false);
         const [newComment, setNewComment] = useState('');
 
@@ -40,7 +44,7 @@ const PostCard: React.FC<IPostProps> = observer(
         const handleAddComment = () => {
             if (newComment.trim() !== '') {
                 const newCommentData = {
-                    id: String(Date.now()),
+                    id: new Date().toISOString(),
                     postId: post.id,
                     author: currentUser,
                     createdAt: new Date().toISOString(),
@@ -53,57 +57,105 @@ const PostCard: React.FC<IPostProps> = observer(
         };
 
         const handleDeletePost = () => {
-            console.log('post id', id);
-            postsStore.deletePost(id);
+            console.log('delete');
+            if (authUser && author.id === authUser.id) {
+                postsStore.deletePost(id);
+                console.log('delete2');
+            }
         };
+
+        const isAuthor = authUser && author.id === authUser.id;
 
         return (
             <>
-                <Card
-                    style={{ marginTop: 20 }}
-                    actions={[
-                        <Badge
-                            count={hasComments ? postComments.length : 0}
-                            overflowCount={99}
-                            size='small'
+                <Card style={{ marginTop: 20 }}>
+                    <Link to={`/profile/${post.author.id}`}>
+                        <Card.Meta
+                            avatar={
+                                <Avatar
+                                    size='large'
+                                    style={{ backgroundColor: '#87d068' }}
+                                    icon={<UserOutlined />}
+                                    src={author?.avatarUrl}
+                                />
+                            }
+                            title={
+                                <>
+                                    {author.username}
+                                    <p
+                                        style={{
+                                            fontSize: '12px',
+                                            margin: 0,
+                                            color: 'rgba(0, 0, 0, 0.45)',
+                                        }}
+                                    >
+                                        {formatPostDate(createdAt)}
+                                    </p>
+                                </>
+                            }
+                        />
+                    </Link>
+
+                    <div
+                        style={{
+                            fontSize: '1rem',
+                            color: 'black',
+                            padding: '20px 0',
+                        }}
+                    >
+                        {content}
+                    </div>
+                    <div>
+                        {post.imgUrls &&
+                            post.imgUrls.map((imgUrl) => (
+                                <Image key={imgUrl} src={imgUrl} width={250} />
+                            ))}
+                    </div>
+
+                    <Space
+                        style={{
+                            marginTop: '20px',
+                        }}
+                    >
+                        <div
+                            style={{
+                                backgroundColor: 'rgb(242, 242, 242)',
+                                padding: '6px',
+                                borderRadius: '5px',
+                                color: '#1890ff',
+                            }}
                         >
+                            {hasComments ? postComments.length : ''}
                             <CommentOutlined
-                                key='setting'
                                 onClick={handleShowComments}
                                 style={{
+                                    marginLeft: 5,
                                     color: hasComments
                                         ? '#1890ff'
                                         : 'rgba(0, 0, 0, 0.25)',
                                 }}
                             />
-                        </Badge>,
-                        <DeleteOutlined
-                            key='delete'
-                            onClick={handleDeletePost}
-                        />,
-                    ]}
-                >
-                    <Card.Meta
-                        avatar={<Avatar src={author.avatarUrl} size='large' />}
-                        title={author.username}
-                        description={createdAt}
-                    />
-                    <p style={{ fontSize: '1.5rem' }}>{content}</p>
+                        </div>
+                        {isAuthor && isAuth && (
+                            <div
+                                style={{
+                                    backgroundColor: 'rgb(242, 242, 242)',
+                                    padding: '6px',
+                                    borderRadius: '5px',
+                                }}
+                            >
+                                <DeleteOutlined
+                                    key='delete'
+                                    onClick={handleDeletePost}
+                                />
+                            </div>
+                        )}
+                    </Space>
                 </Card>
                 {showComments && (
                     <Card>
                         {postComments.map((comment) => (
-                            <Card.Meta
-                                key={comment.id}
-                                avatar={
-                                    <Avatar
-                                        src={comment.author.avatarUrl}
-                                        size='small'
-                                    />
-                                }
-                                title={comment.author.username}
-                                description={comment.content}
-                            />
+                            <CommentCard key={comment.id} comment={comment} />
                         ))}
                     </Card>
                 )}
@@ -111,25 +163,35 @@ const PostCard: React.FC<IPostProps> = observer(
                     <Card>
                         <Card.Meta
                             style={{ display: 'flex', width: '100%' }}
-                            avatar={<Avatar src={currentUser.avatarUrl} />}
+                            avatar={
+                                <Avatar
+                                    src={currentUser.avatarUrl}
+                                    style={{ backgroundColor: '#87d068' }}
+                                    icon={<UserOutlined />}
+                                />
+                            }
                             description={
                                 <Flex gap={10}>
-                                    <Input.TextArea
-                                        rows={1}
-                                        placeholder='Добавить комментарий...'
-                                        value={newComment}
-                                        onChange={(e) =>
-                                            setNewComment(e.target.value)
-                                        }
-                                        onPressEnter={handleAddComment}
-                                    />
-                                    <SendOutlined
-                                        style={{ cursor: 'pointer' }}
-                                        onClick={handleAddComment}
-                                        disabled={
-                                            !isAuth || newComment.trim() === ''
-                                        }
-                                    />
+                                    <Space.Compact style={{ width: '100%' }}>
+                                        <Input
+                                            placeholder='Добавить комментарий...'
+                                            value={newComment}
+                                            onChange={(e) =>
+                                                setNewComment(e.target.value)
+                                            }
+                                            onPressEnter={handleAddComment}
+                                        />
+                                        <Button
+                                            type='primary'
+                                            onClick={handleAddComment}
+                                            disabled={
+                                                !isAuth ||
+                                                newComment.trim() === ''
+                                            }
+                                        >
+                                            Отправить
+                                        </Button>
+                                    </Space.Compact>
                                 </Flex>
                             }
                         />

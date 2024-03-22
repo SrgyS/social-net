@@ -1,0 +1,345 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "John",
+      "password": "password",
+      "email": "james@gmail.com",
+      "avatarUrl": "https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663110850_6-mykaleidoscope-ru-p-spokoinii-chelovek-vkontakte-8.jpg",
+      "isOnline": false,
+      "friends": []
+    },
+    {
+      "id": "2",
+      "password": "password",
+      "username": "Pete",
+      "email": "james@gmail.com",
+      "avatarUrl": "https://api.dicebear.com/7.x/adventurer-neutral/svg",
+      "isOnline": true,
+      "friends": []
+    },
+    {
+      "id": "3",
+      "password": "password",
+      "username": "Ann",
+      "email": "james@gmail.com",
+      "avatarUrl": "https://api.dicebear.com/7.x/micah/svg",
+      "isOnline": false,
+      "friends": [
+        "Tue Mar 19 2024 15:26:56 GMT+0300 (Москва, стандартное время)"
+      ]
+    },
+    {
+      "id": "4",
+      "password": "password",
+      "username": "Tom",
+      "email": "james@gmail.com",
+      "avatarUrl": "https://api.dicebear.com/7.x/micah/svg?seed=Felix",
+      "isOnline": true,
+      "friends": []
+    },
+    {
+      "id": "Tue Mar 19 2024 14:41:24 GMT+0300 (Москва, стандартное время)",
+      "username": "Петя",
+      "email": "test@admin.com",
+      "password": "123",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
+    },
+    {
+      "id": "Tue Mar 19 2024 14:42:45 GMT+0300 (Москва, стандартное время)",
+      "username": "Петя",
+      "email": "test@admin.com",
+      "password": "123",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
+    },
+    {
+      "id": "Tue Mar 19 2024 14:47:23 GMT+0300 (Москва, стандартное время)",
+      "username": "Игорь",
+      "email": "test@admin.com",
+      "password": "12345",
+      "isOnline": true,
+      "friends": [
+        "Tue Mar 19 2024 15:26:56 GMT+0300 (Москва, стандартное время)"
+      ],
+      "posts": []
+    },
+    {
+      "id": "Tue Mar 19 2024 15:26:56 GMT+0300 (Москва, стандартное время)",
+      "username": "Джон",
+      "email": "admin@test.ru",
+      "password": "123",
+      "isOnline": true,
+      "friends": [
+        "3",
+        "Tue Mar 19 2024 14:47:23 GMT+0300 (Москва, стандартное время)"
+      ],
+      "posts": []
+    },
+    {
+      "id": "Tue Mar 19 2024 20:07:39 GMT+0300 (Москва, стандартное время)",
+      "username": "Петя",
+      "email": "test@admin.com",
+      "password": "123",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
+    },
+    {
+      "id": "Tue Mar 19 2024 20:13:00 GMT+0300 (Москва, стандартное время)",
+      "username": "Peter",
+      "email": "test@admin.com",
+      "password": "111",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
+    },
+    {
+      "id": "Tue Mar 19 2024 20:18:59 GMT+0300 (Москва, стандартное время)",
+      "username": "Peter",
+      "email": "test@admin.com",
+      "password": "123",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
+    },
+    {
+      "id": "Tue Mar 19 2024 20:24:40 GMT+0300 (Москва, стандартное время)",
+      "username": "John",
+      "email": "test@admin.com",
+      "password": "111",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
+    },
+    {
+      "id": "Tue Mar 19 2024 21:04:38 GMT+0300 (Москва, стандартное время)",
+      "username": "Ваня новый",
+      "email": "test@admin.com",
+      "password": "111",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
+    },
+    {
+      "id": "Tue Mar 19 2024 21:17:09 GMT+0300 (Москва, стандартное время)",
+      "username": "rocky",
+      "email": "test@admin.com",
+      "password": "111",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
+    },
+    {
+      "id": "Tue Mar 19 2024 21:18:47 GMT+0300 (Москва, стандартное время)",
+      "username": "Ваня",
+      "email": "test@admin.com",
+      "password": "111",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
+    },
+    {
+      "id": "Tue Mar 19 2024 21:19:54 GMT+0300 (Москва, стандартное время)",
+      "username": "Ира Петрова",
+      "email": "test@admin.com",
+      "password": "12345",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
+    },
+    {
+      "id": "2024-03-19T18:25:18.125Z",
+      "username": "",
+      "email": "test@admin.com",
+      "password": "123",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
+    },
+    {
+      "id": "2024-03-19T18:25:34.177Z",
+      "username": "",
+      "email": "test22@admin.com",
+      "password": "adcs",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
+    },
+    {
+      "id": "2024-03-20T09:11:56.622Z",
+      "username": "Петя",
+      "email": "test1@admin.com",
+      "password": "123",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
+    },
+    {
+      "id": "2024-03-20T10:26:19.882Z",
+      "username": "Ваня",
+      "email": "test232@admin.com",
+      "password": "123",
+      "isOnline": true,
+      "friends": [],
+      "posts": []
+    }
+  ],
+  "posts": [
+    {
+      "id": "1710872333965",
+      "author": {
+        "id": "Tue Mar 19 2024 21:18:47 GMT+0300 (Москва, стандартное время)",
+        "username": "Ваня",
+        "email": "test@admin.com",
+        "password": "111",
+        "isOnline": true,
+        "friends": [],
+        "posts": []
+      },
+      "content": "werf",
+      "createdAt": "2024-03-19T18:18:53.965Z",
+      "comments": []
+    },
+    {
+      "id": "1710872359073",
+      "author": {
+        "id": "Tue Mar 19 2024 21:18:47 GMT+0300 (Москва, стандартное время)",
+        "username": "Ваня",
+        "email": "test@admin.com",
+        "password": "111",
+        "isOnline": true,
+        "friends": [],
+        "posts": []
+      },
+      "content": "Новый пост\n\n",
+      "createdAt": "2024-03-19T18:19:19.073Z",
+      "comments": []
+    },
+    {
+      "id": "1710872408963",
+      "author": {
+        "id": "Tue Mar 19 2024 21:19:54 GMT+0300 (Москва, стандартное время)",
+        "username": "Ира Петрова",
+        "email": "test@admin.com",
+        "password": "12345",
+        "isOnline": true,
+        "friends": [],
+        "posts": []
+      },
+      "content": "Проверка",
+      "createdAt": "2024-03-19T18:20:08.963Z",
+      "comments": []
+    },
+    {
+      "id": "1710872417389",
+      "author": {
+        "id": "Tue Mar 19 2024 21:19:54 GMT+0300 (Москва, стандартное время)",
+        "username": "Ира Петрова",
+        "email": "test@admin.com",
+        "password": "12345",
+        "isOnline": true,
+        "friends": [],
+        "posts": []
+      },
+      "content": "Работает",
+      "createdAt": "2024-03-19T18:20:17.389Z",
+      "comments": []
+    },
+    {
+      "id": "1710926059398",
+      "author": {
+        "id": "Tue Mar 19 2024 14:41:24 GMT+0300 (Москва, стандартное время)",
+        "username": "Петя",
+        "email": "test@admin.com",
+        "password": "123",
+        "isOnline": true,
+        "friends": [],
+        "posts": []
+      },
+      "content": "Пост ",
+      "createdAt": "2024-03-20T09:14:19.398Z",
+      "comments": []
+    }
+  ],
+  "comments": [
+    {
+      "author": {
+        "id": "2t",
+        "password": "password",
+        "username": "Pete",
+        "email": "james@gmail.com",
+        "avatarUrl": "https://api.dicebear.com/7.x/adventurer-neutral/svg",
+        "isOnline": true,
+        "friends": []
+      },
+      "createdAt": "2024-03-19T17:54:56.131Z",
+      "id": "23",
+      "content": "comment test",
+      "postId": "2323"
+    },
+    {
+      "author": {
+        "id": "2t",
+        "password": "password",
+        "username": "Pete1",
+        "email": "james@gmail.com",
+        "avatarUrl": "https://api.dicebear.com/7.x/adventurer-neutral/svg",
+        "isOnline": true,
+        "friends": []
+      },
+      "createdAt": "2024-03-19T17:54:56.131Z",
+      "id": "213",
+      "content": "comment test",
+      "postId": "2323"
+    },
+    {
+      "author": {
+        "id": "2t",
+        "password": "password",
+        "username": "Pete2",
+        "email": "james@gmail.com",
+        "avatarUrl": "https://api.dicebear.com/7.x/adventurer-neutral/svg",
+        "isOnline": true,
+        "friends": []
+      },
+      "createdAt": "2024-03-19T17:54:56.131Z",
+      "id": "123",
+      "content": "comment test",
+      "postId": "2323"
+    },
+    {
+      "author": {
+        "id": "2t",
+        "password": "password",
+        "username": "Pete3",
+        "email": "james@gmail.com",
+        "avatarUrl": "https://api.dicebear.com/7.x/adventurer-neutral/svg",
+        "isOnline": true,
+        "friends": []
+      },
+      "createdAt": "2024-03-19T17:54:56.131Z",
+      "id": "2113",
+      "content": "comment test",
+      "postId": "2323"
+    },
+    {
+      "author": {
+        "id": "2t",
+        "password": "password",
+        "username": "Pete4",
+        "email": "james@gmail.com",
+        "avatarUrl": "https://api.dicebear.com/7.x/adventurer-neutral/svg",
+        "isOnline": true,
+        "friends": []
+      },
+      "createdAt": "2024-03-19T17:54:56.131Z",
+      "id": "1223",
+      "content": "comment test wwww",
+      "postId": "2323"
+    }
+  ]
+}

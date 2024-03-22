@@ -1,23 +1,44 @@
 import { action, makeObservable, observable } from 'mobx';
+import {
+    loadDataFromLocalStorage,
+    saveDataToLocalStorage,
+} from '../utils/localStorageUtils';
 
 import { IComment } from '../types';
+import { mockComments } from '../mockData/mockData';
+
+const COMMENTS_KEY = 'comments';
 
 export class CommentsStore {
     constructor() {
         makeObservable(this);
+        this.loadComments();
     }
-    @observable comments: IComment[] = [];
+    @observable allComments: IComment[] = [];
 
-    @action addComment(comment: IComment) {
-        this.comments.push(comment);
-        console.log('add comment', this.comments);
+    @action loadComments() {
+        const comments: IComment[] | null =
+            loadDataFromLocalStorage(COMMENTS_KEY);
+
+        if (!comments) {
+            this.allComments = mockComments;
+            saveDataToLocalStorage(COMMENTS_KEY, this.allComments);
+        } else {
+            this.allComments = comments;
+        }
+    }
+
+    @action
+    addComment(comment: IComment) {
+        this.allComments.push(comment);
+        saveDataToLocalStorage(COMMENTS_KEY, this.allComments);
     }
 
     @action deleteComment(commentId: string) {
-        this.comments = this.comments.filter(
+        this.allComments = this.allComments.filter(
             (comment) => comment.id !== commentId
         );
-        console.log('delete post');
+        saveDataToLocalStorage(COMMENTS_KEY, this.allComments);
     }
 }
 
