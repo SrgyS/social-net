@@ -2,6 +2,7 @@ import { Avatar, Button, Card, Flex, Image, Input, Space } from 'antd';
 import {
     CommentOutlined,
     DeleteOutlined,
+    EditOutlined,
     UserOutlined,
 } from '@ant-design/icons';
 import { IComment, IPost, IUser } from '../../../types';
@@ -57,10 +58,8 @@ const PostCard: React.FC<IPostProps> = observer(
         };
 
         const handleDeletePost = () => {
-            console.log('delete');
             if (authUser && author.id === authUser.id) {
                 postsStore.deletePost(id);
-                console.log('delete2');
             }
         };
 
@@ -120,13 +119,13 @@ const PostCard: React.FC<IPostProps> = observer(
                         <div
                             style={{
                                 backgroundColor: 'rgb(242, 242, 242)',
-                                padding: '6px',
+                                padding: '6px 10px 6px 5px',
                                 borderRadius: '5px',
                                 color: '#1890ff',
                             }}
                         >
                             {hasComments ? postComments.length : ''}
-                            <CommentOutlined
+                            <EditOutlined
                                 onClick={handleShowComments}
                                 style={{
                                     marginLeft: 5,
@@ -140,7 +139,7 @@ const PostCard: React.FC<IPostProps> = observer(
                             <div
                                 style={{
                                     backgroundColor: 'rgb(242, 242, 242)',
-                                    padding: '6px',
+                                    padding: '6px 10px',
                                     borderRadius: '5px',
                                 }}
                             >

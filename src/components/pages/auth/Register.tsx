@@ -37,7 +37,6 @@ const Register = ({ onSubmit }: IAuthProps) => {
                 unreadMessages: [],
                 avatarUrl: avatarUrl[0] || '',
             };
-            console.log('user', newUser);
             usersStore.addUser(newUser);
             usersStore.setAuthUser(newUser);
             onSubmit();
