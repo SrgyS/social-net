@@ -1,6 +1,5 @@
 import { Avatar, Button, Card, Flex, Image, Input, Space } from 'antd';
 import {
-    CommentOutlined,
     DeleteOutlined,
     EditOutlined,
     UserOutlined,
