@@ -45,7 +45,6 @@ const AddPost: FC = observer(() => {
         fileList: newFileList,
     }: UploadChangeParam) => {
         setFileList(newFileList);
-        console.log('upload', fileList);
     };
 
     return (

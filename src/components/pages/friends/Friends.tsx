@@ -17,7 +17,6 @@ export const Friends: FC = observer(() => {
     const handleConfirmFriendRequest = (id: string) => {
         if (authUser) {
             usersStore.confirmFriendRequest(authUser.id, id);
-            console.log(`Friend request's ${id})`);
         }
     };
     const handleCancelFriendRequest = (id: string) => {
