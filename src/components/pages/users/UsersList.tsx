@@ -2,6 +2,7 @@ import { Avatar, Badge, Card, Menu } from 'antd';
 
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import { UserOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
 import usersStore from '../../../store/users';
 
@@ -27,7 +28,12 @@ const UsersList: FC = observer(() => {
                                 dot={user.isOnline}
                                 style={{ backgroundColor: '#52c41a' }}
                             >
-                                <Avatar src={user.avatarUrl} size='small' />
+                                <Avatar
+                                    src={user.avatarUrl}
+                                    size='small'
+                                    style={{ backgroundColor: '#87d068' }}
+                                    icon={<UserOutlined />}
+                                />
                             </Badge>
                         ),
                     })),

@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input, Upload, message } from 'antd';
+import { Button, Card, Flex, Form, Input, Upload, message } from 'antd';
 import { IAuthFormValues, IUser } from '../../../types';
 import { UploadChangeParam, UploadFile } from 'antd/es/upload';
 
@@ -120,20 +120,23 @@ const Register = ({ onSubmit }: IAuthProps) => {
                 >
                     <Input.Password />
                 </Form.Item>
-
-                <Upload
-                    listType='picture'
-                    maxCount={1}
-                    onChange={(file) => handleUploadChange(file)}
-                >
-                    <Button icon={<InboxOutlined />}>Загрузить аватар</Button>
-                </Upload>
-
-                <Form.Item>
+                <Flex vertical gap={20}>
+                    {' '}
+                    <Upload
+                        listType='picture'
+                        maxCount={1}
+                        onChange={(file) => handleUploadChange(file)}
+                    >
+                        <Button icon={<InboxOutlined />}>
+                            Загрузить аватар
+                        </Button>
+                    </Upload>
                     <Button type='primary' htmlType='submit' block>
                         Зарегистрироваться
                     </Button>
-                </Form.Item>
+                </Flex>
+
+                <Form.Item></Form.Item>
             </Form>
         </Card>
     );

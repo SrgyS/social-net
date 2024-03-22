@@ -1,30 +1,41 @@
-# React + TypeScript + Vite
+# Социальная Сеть
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Это приложение социальной сети. Приложение предоставляет такие функции, как регистрация пользователей, аутентификация, просмотр профилей, запросы на добавление в друзья, обмен сообщениями, уведомления о новых сообщениях и запросах на добавление в друзья, а также управление постами, включая их добавление и удаление, а также комментирование. Приложение использует local storage для хранения данных. В приложении реализована функция очистки local storage.
 
-Currently, two official plugins are available:
+## Функционал
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Регистрация и Аутентификация Пользователей**: Пользователи могут зарегистрироваться для создания новой учетной записи и войти в систему.
+**Проверка email:** Реализована для обеспечения уникальности адресов электронной почты.
+**Просмотр Профилей:** Пользователи могут просматривать профили других пользователей.
+**Запросы на Добавление в Друзья:** Пользователи могут отправлять и принимать запросы на добавление в друзья.
+**Обмен Сообщениями:** Пользователи могут отправлять сообщения друг другу.
+**Уведомления:** Пользователи получают уведомления о новых сообщениях и запросах на добавление в друзья.
+**Управление постами:** Пользователи могут добавлять и удалять посты.
+**Комментирование:** Пользователи могут комментировать посты.
 
-## Expanding the ESLint configuration
+## Технологии
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+-   React
+-   Typescript
+-   Ant design
+-   MobX
 
-- Configure the top-level `parserOptions` property like this:
+## Установка
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Для запуска приложения локально выполните следующие шаги:
+Склонируйте репозиторий на свой локальный компьютер.
+git clone https://github.com/SrgyS/social-net.git
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Перейдите в каталог проекта.
+
+cd social-net
+
+Установите зависимости с помощью npm или yarn.
+
+npm install или yarn install
+Запустите сервер разработки.
+npm run dev
+
+## Автор
+
+Сергей Степанов

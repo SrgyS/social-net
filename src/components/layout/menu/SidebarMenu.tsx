@@ -1,20 +1,12 @@
-import {
-    Avatar,
-    Badge,
-    Button,
-    Card,
-    Flex,
-    Menu,
-    Modal,
-    Typography,
-} from 'antd';
+import { Avatar, Button, Card, Flex, Menu, Modal, Typography } from 'antd';
 import { FC, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 
+import { BadgeWithCount } from './BadgeWithCount';
 import Login from '../../pages/auth/Login';
 import Register from '../../pages/auth/Register';
 import { UserOutlined } from '@ant-design/icons';
 import { dataMenu } from './dataMenu';
+import { useNavigate } from 'react-router-dom';
 import usersStore from '../../../store/users';
 
 interface ISidebarMenuProps {
@@ -50,11 +42,18 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
 
     const menuItems = authUser?.id ? dataMenu(authUser.id) : [];
 
+    interface CountsByPath {
+        [key: string]: number;
+    }
+    const countsByPath: CountsByPath = {
+        '/messages': authUser?.unreadMessages.length || 0,
+        '/friends': authUser?.inFriendRequest.length || 0,
+    };
+
     return (
         <Card>
             {isAuth ? (
                 <>
-                    {' '}
                     <Flex
                         justify='start'
                         style={{ marginLeft: '10px', marginBottom: '20px' }}
@@ -75,22 +74,11 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
                         items={menuItems.map((item) => ({
                             key: item.path,
                             label: (
-                                <Badge
-                                    color='blue'
-                                    style={{
-                                        margin: '6px -15px',
-                                        cursor: 'pointer',
-                                    }}
-                                    count={
-                                        item.path === '/messages'
-                                            ? usersStore.authUser
-                                                  ?.unreadMessages.length || 0
-                                            : 0
-                                    }
-                                    overflowCount={99}
-                                >
-                                    <Link to={item.path}>{item.title}</Link>
-                                </Badge>
+                                <BadgeWithCount
+                                    path={item.path}
+                                    count={countsByPath[item.path]}
+                                    title={item.title}
+                                />
                             ),
                             icon: (
                                 <item.icon
@@ -98,7 +86,9 @@ const SidebarMenu: FC<ISidebarMenuProps> = ({ isAuth }) => {
                                 />
                             ),
                         }))}
-                        style={{ borderInlineEnd: 'none' }}
+                        style={{
+                            borderInlineEnd: 'none',
+                        }}
                     />
                     <Button
                         type='primary'

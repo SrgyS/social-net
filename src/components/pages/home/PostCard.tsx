@@ -7,6 +7,8 @@ import {
 import { IComment, IPost, IUser } from '../../../types';
 import React, { useState } from 'react';
 
+import CommentCard from './CommentCard';
+import { Link } from 'react-router-dom';
 import commentsStore from '../../../store/comments';
 import { formatPostDate } from '../../../utils/formatPostDate';
 import { observer } from 'mobx-react-lite';
@@ -55,8 +57,10 @@ const PostCard: React.FC<IPostProps> = observer(
         };
 
         const handleDeletePost = () => {
+            console.log('delete');
             if (authUser && author.id === authUser.id) {
                 postsStore.deletePost(id);
+                console.log('delete2');
             }
         };
 
@@ -64,12 +68,66 @@ const PostCard: React.FC<IPostProps> = observer(
 
         return (
             <>
-                <Card
-                    style={{ marginTop: 20 }}
-                    actions={[
-                        <div key='comment' onClick={handleShowComments}>
+                <Card style={{ marginTop: 20 }}>
+                    <Link to={`/profile/${post.author.id}`}>
+                        <Card.Meta
+                            avatar={
+                                <Avatar
+                                    size='large'
+                                    style={{ backgroundColor: '#87d068' }}
+                                    icon={<UserOutlined />}
+                                    src={author?.avatarUrl}
+                                />
+                            }
+                            title={
+                                <>
+                                    {author.username}
+                                    <p
+                                        style={{
+                                            fontSize: '12px',
+                                            margin: 0,
+                                            color: 'rgba(0, 0, 0, 0.45)',
+                                        }}
+                                    >
+                                        {formatPostDate(createdAt)}
+                                    </p>
+                                </>
+                            }
+                        />
+                    </Link>
+
+                    <div
+                        style={{
+                            fontSize: '1rem',
+                            color: 'black',
+                            padding: '20px 0',
+                        }}
+                    >
+                        {content}
+                    </div>
+                    <div>
+                        {post.imgUrls &&
+                            post.imgUrls.map((imgUrl) => (
+                                <Image key={imgUrl} src={imgUrl} width={250} />
+                            ))}
+                    </div>
+
+                    <Space
+                        style={{
+                            marginTop: '20px',
+                        }}
+                    >
+                        <div
+                            style={{
+                                backgroundColor: 'rgb(242, 242, 242)',
+                                padding: '6px',
+                                borderRadius: '5px',
+                                color: '#1890ff',
+                            }}
+                        >
                             {hasComments ? postComments.length : ''}
                             <CommentOutlined
+                                onClick={handleShowComments}
                                 style={{
                                     marginLeft: 5,
                                     color: hasComments
@@ -77,49 +135,27 @@ const PostCard: React.FC<IPostProps> = observer(
                                         : 'rgba(0, 0, 0, 0.25)',
                                 }}
                             />
-                        </div>,
-                        isAuthor && isAuth && (
-                            <DeleteOutlined
-                                key='delete'
-                                onClick={handleDeletePost}
-                            />
-                        ),
-                    ]}
-                >
-                    <Space>
-                        {post.imgUrls &&
-                            post.imgUrls.map((imgUrl) => (
-                                <Image key={imgUrl} src={imgUrl} width={250} />
-                            ))}
+                        </div>
+                        {isAuthor && isAuth && (
+                            <div
+                                style={{
+                                    backgroundColor: 'rgb(242, 242, 242)',
+                                    padding: '6px',
+                                    borderRadius: '5px',
+                                }}
+                            >
+                                <DeleteOutlined
+                                    key='delete'
+                                    onClick={handleDeletePost}
+                                />
+                            </div>
+                        )}
                     </Space>
-
-                    <Card.Meta
-                        avatar={
-                            <Avatar
-                                style={{ backgroundColor: '#87d068' }}
-                                icon={<UserOutlined />}
-                                src={author?.avatarUrl}
-                            />
-                        }
-                        title={author.username}
-                        description={formatPostDate(createdAt)}
-                    />
-                    <p style={{ fontSize: '1.5rem' }}>{content}</p>
                 </Card>
                 {showComments && (
                     <Card>
                         {postComments.map((comment) => (
-                            <Card.Meta
-                                key={comment.id}
-                                avatar={
-                                    <Avatar
-                                        src={comment.author.avatarUrl}
-                                        size='small'
-                                    />
-                                }
-                                title={comment.author.username}
-                                description={comment.content}
-                            />
+                            <CommentCard key={comment.id} comment={comment} />
                         ))}
                     </Card>
                 )}
@@ -127,7 +163,13 @@ const PostCard: React.FC<IPostProps> = observer(
                     <Card>
                         <Card.Meta
                             style={{ display: 'flex', width: '100%' }}
-                            avatar={<Avatar src={currentUser.avatarUrl} />}
+                            avatar={
+                                <Avatar
+                                    src={currentUser.avatarUrl}
+                                    style={{ backgroundColor: '#87d068' }}
+                                    icon={<UserOutlined />}
+                                />
+                            }
                             description={
                                 <Flex gap={10}>
                                     <Space.Compact style={{ width: '100%' }}>

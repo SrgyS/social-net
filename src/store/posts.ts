@@ -33,11 +33,12 @@ export class PostsStore {
     @action deletePost(postId: string) {
         this.allPosts = this.allPosts.filter((post) => post.id !== postId);
         saveDataToLocalStorage(POSTS_KEY, this.allPosts);
+        console.log('delete from store');
     }
 
-    @action getUserPosts(userId: string) {
-        return this.allPosts.filter((post) => post.author.id === userId);
-    }
+    // @action getUserPosts(userId: string) {
+    //     return this.allPosts.filter((post) => post.author.id === userId);
+    // }
 }
 
 const postsStore = new PostsStore();

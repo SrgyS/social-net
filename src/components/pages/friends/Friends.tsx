@@ -1,7 +1,8 @@
 import { Avatar, Badge, Button, Card, Flex, List, Typography } from 'antd';
 import { FC, useState } from 'react';
+import { MessageOutlined, UserOutlined } from '@ant-design/icons';
 
-import { UserOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 import { getUsers } from '../../../utils/getUsers';
 import { observer } from 'mobx-react-lite';
 import usersStore from '../../../store/users';
@@ -26,11 +27,11 @@ export const Friends: FC = observer(() => {
     };
     const Title = (
         <Flex justify='space-between' align='center'>
-            Друзья
+            {showFriendRequest ? 'Заявки в друзья' : 'Друзья'}
             <Badge
                 color='blue'
                 count={friendsRequest.length}
-                offset={[-25, 25]}
+                offset={[-20, 25]}
             >
                 <div style={{ padding: '20px' }}>
                     <Button
@@ -98,15 +99,29 @@ export const Friends: FC = observer(() => {
                     renderItem={(user) => {
                         return (
                             <List.Item>
-                                <List.Item.Meta
-                                    avatar={<Avatar icon={<UserOutlined />} />}
-                                    title={
-                                        <Typography>
-                                            {user?.username}
-                                        </Typography>
-                                    }
-                                />
-                                <Button>Send Message</Button>
+                                <Link to={`/profile/${user?.id}`}>
+                                    <List.Item.Meta
+                                        avatar={
+                                            <Avatar
+                                                style={{
+                                                    backgroundColor: '#87d068',
+                                                }}
+                                                icon={<UserOutlined />}
+                                                src={user?.avatarUrl}
+                                            />
+                                        }
+                                        title={user?.username}
+                                    />
+                                </Link>
+
+                                <Button
+                                    icon={<MessageOutlined />}
+                                    style={{ marginRight: '0.5rem' }}
+                                >
+                                    <Link to={`/messages/${user?.id}`}>
+                                        Написать сообщение
+                                    </Link>
+                                </Button>
                             </List.Item>
                         );
                     }}

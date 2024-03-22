@@ -1,10 +1,10 @@
+import Conversation from '../pages/message/Conversation';
 import { Friends } from '../pages/friends/Friends';
 import Home from '../pages/home/Home';
 import Message from '../pages/message/Messages';
 import { Navigate } from 'react-router-dom';
 import UserProfile from '../pages/profile/UserProfile';
 import UsersList from '../pages/users/UsersList';
-import Conversation from '../pages/message/Conversation';
 
 export default function privateRoutes() {
     return [

@@ -1,4 +1,4 @@
-import { Button, Input, Upload } from 'antd';
+import { Button, Card, Input, Upload } from 'antd';
 import { ChangeEvent, FC, useState } from 'react';
 import { UploadChangeParam, UploadFile } from 'antd/es/upload/interface';
 
@@ -49,7 +49,7 @@ const AddPost: FC = observer(() => {
     };
 
     return (
-        <div style={{ marginBottom: '2rem' }}>
+        <Card size='small' style={{ marginBottom: '2rem' }}>
             <TextArea
                 rows={isExpanded ? 4 : 1}
                 value={postText}
@@ -77,7 +77,7 @@ const AddPost: FC = observer(() => {
                     </Button>
                 </div>
             )}
-        </div>
+        </Card>
     );
 });
 

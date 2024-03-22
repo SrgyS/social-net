@@ -47,11 +47,6 @@ export class UsersStore {
         saveDataToLocalStorage(USERS_KEY, this.allUsers);
     }
 
-    // @action deleteUser(userId: string) {
-    //     this.allUsers = this.allUsers.filter((user) => user.id !== userId);
-    //     saveDataToLocalStorage(USERS_KEY, this.allUsers);
-    // }
-
     @action addFriendRequest(currentUserId: string, friendId: string) {
         const [friendUser, currentUser] = this.getUsers(
             currentUserId,

@@ -1,8 +1,9 @@
-import { Avatar, Button, Card, Input, List, Space } from 'antd';
+import { Avatar, Button, Card, Flex, Input, List, Space } from 'antd';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { IMessage } from '../../../types';
+import { UserOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
-import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import usersStore from '../../../store/users';
 
@@ -29,20 +30,37 @@ const Conversation = observer(() => {
         }
     };
 
+    const navigate = useNavigate();
+
+    const handleGoBack = () => {
+        navigate(-1);
+    };
+
     return (
         <>
-            <Space
-                style={{
-                    marginBottom: 20,
-                }}
-            >
-                <Avatar
-                    src={receiver?.avatarUrl}
-                    size='large'
-                    style={{ marginRight: 8 }}
-                ></Avatar>
-                <p>{`${receiver?.username}`}</p>
-            </Space>
+            <Card size='small'>
+                <Flex justify='space-between'>
+                    <Link to={`/profile/${receiverId}`}>
+                        {' '}
+                        <Card.Meta
+                            avatar={
+                                <Avatar
+                                    src={receiver?.avatarUrl}
+                                    size='large'
+                                    style={{
+                                        backgroundColor: '#87d068',
+                                    }}
+                                    icon={<UserOutlined />}
+                                />
+                            }
+                            title={receiver?.username}
+                        />
+                    </Link>
+
+                    <Button onClick={handleGoBack}>Назад</Button>
+                </Flex>
+            </Card>
+
             <List
                 split={false}
                 dataSource={conversation}
