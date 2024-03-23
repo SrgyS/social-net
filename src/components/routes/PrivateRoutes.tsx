@@ -1,4 +1,4 @@
-import Conversation from '../pages/message/Conversation';
+import Conversation from '../pages/message/conversation/Conversation';
 import { Friends } from '../pages/friends/Friends';
 import Home from '../pages/home/Home';
 import Message from '../pages/message/Messages';

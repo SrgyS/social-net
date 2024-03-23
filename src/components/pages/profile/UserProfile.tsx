@@ -1,29 +1,28 @@
-import { Avatar, Button, Card, Flex, Typography } from 'antd';
+import { Button, Card, Flex } from 'antd';
 import { Link, useParams } from 'react-router-dom';
 import {
     MessageOutlined,
     MinusOutlined,
     PlusOutlined,
-    UserOutlined,
 } from '@ant-design/icons';
 
 import AddPost from '../home/AddPost';
 import { IUser } from '../../../types';
 import PostCard from '../home/PostCard';
+import { UserInfo } from './UserInfo';
 import commentsStore from '../../../store/comments';
 import { observer } from 'mobx-react-lite';
 import postsStore from '../../../store/posts';
 import usersStore from '../../../store/users';
 
 const UserProfile = observer(() => {
-    const { Text } = Typography;
-    const { isFriendRequestSent, isFriend, authUser } = usersStore;
+    const { isFriendRequestSent, isFriend, authUser, allUsers } = usersStore;
     const { id } = useParams<{ id: string }>();
-    const user = usersStore.allUsers.find((user) => user.id === id);
+    const user = allUsers.find((user) => user.id === id);
     const authUserId = authUser?.id;
     let currentUser: IUser;
-    if (usersStore.authUser) {
-        currentUser = usersStore.authUser;
+    if (authUser) {
+        currentUser = authUser;
     }
 
     const isRequestSent = user ? isFriendRequestSent(user) : false;
@@ -49,45 +48,8 @@ const UserProfile = observer(() => {
 
     return (
         <>
-            {authUser && <AddPost />}
-            <Card>
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        marginBottom: '1rem',
-                    }}
-                >
-                    {user && (
-                        <Avatar
-                            src={user.avatarUrl}
-                            size={64}
-                            style={{
-                                backgroundColor: '#87d068',
-                                minWidth: '64px',
-                            }}
-                            icon={<UserOutlined />}
-                        />
-                    )}
-                    <Flex
-                        style={{ marginLeft: '1rem', width: '100%' }}
-                        justify='space-between'
-                    >
-                        {user && (
-                            <Flex vertical>
-                                <Text strong>{user.username}</Text>
-                                <Text>Email: {user.email}</Text>
-                            </Flex>
-                        )}
-                        {authUser && (
-                            <Flex align='center' gap={10}>
-                                <UserOutlined />
-                                <Text strong>{authUser?.friends.length}</Text>
-                                <Text>друзей</Text>
-                            </Flex>
-                        )}
-                    </Flex>
-                </div>
+            <Card style={{ backgroundColor: 'rgb(225, 241, 255, 0.9)' }}>
+                <UserInfo user={user} authUser={authUser as IUser} />
                 {!isOwnProfile && authUser && (
                     <Flex style={{ marginTop: '1rem' }}>
                         <Button
@@ -122,16 +84,20 @@ const UserProfile = observer(() => {
                         )}
                     </Flex>
                 )}
-                {userPosts?.map((post) => (
-                    <PostCard
-                        isAuth={!!usersStore.authUser}
-                        post={post}
-                        key={post.id}
-                        currentUser={currentUser}
-                        comments={comments}
-                    />
-                ))}
             </Card>
+            <div style={{ marginTop: '1rem' }}>
+                {authUser && isOwnProfile && <AddPost />}
+            </div>
+
+            {userPosts?.map((post) => (
+                <PostCard
+                    isAuth={!!usersStore.authUser}
+                    post={post}
+                    key={post.id}
+                    currentUser={currentUser}
+                    comments={comments}
+                />
+            ))}
         </>
     );
 });

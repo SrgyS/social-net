@@ -176,7 +176,7 @@ export class UsersStore {
         };
     }
 
-    @action markMessagesAsRead(userId: string) {
+    @action markMessagesAsRead = (userId: string) => {
         const currentUser = this.allUsers?.find(
             (user) => user.id === this.authUser?.id
         );
@@ -194,7 +194,7 @@ export class UsersStore {
 
             saveDataToLocalStorage(USERS_KEY, this.allUsers);
         }
-    }
+    };
 
     private getUsers(currentUserId: string, friendId: string) {
         return [

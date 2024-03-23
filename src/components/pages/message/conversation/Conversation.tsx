@@ -1,11 +1,12 @@
-import { Avatar, Button, Card, Flex, Input, List, Space } from 'antd';
+import { Avatar, Button, Card, Flex, Input, Space } from 'antd';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import { IMessage } from '../../../types';
+import { IMessage } from '../../../../types';
+import { MessagesList } from './MessagesList';
 import { UserOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
-import usersStore from '../../../store/users';
+import usersStore from '../../../../store/users';
 
 const Conversation = observer(() => {
     const { authUser, getConversation, allUsers } = usersStore;
@@ -41,7 +42,6 @@ const Conversation = observer(() => {
             <Card size='small'>
                 <Flex justify='space-between'>
                     <Link to={`/profile/${receiverId}`}>
-                        {' '}
                         <Card.Meta
                             avatar={
                                 <Avatar
@@ -60,43 +60,7 @@ const Conversation = observer(() => {
                     <Button onClick={handleGoBack}>Назад</Button>
                 </Flex>
             </Card>
-
-            <List
-                split={false}
-                dataSource={conversation}
-                renderItem={(message) => (
-                    <List.Item
-                        style={{
-                            maxWidth: '70%',
-
-                            marginLeft:
-                                message.senderId === senderId ? 'auto' : '',
-                        }}
-                    >
-                        <List.Item.Meta
-                            description={
-                                <div
-                                    style={{
-                                        wordBreak: 'break-word',
-                                    }}
-                                >
-                                    <Card
-                                        style={{
-                                            width: '100%',
-                                            backgroundColor:
-                                                message.senderId === senderId
-                                                    ? '#dedfe0'
-                                                    : '',
-                                        }}
-                                    >
-                                        {message.text}
-                                    </Card>
-                                </div>
-                            }
-                        />
-                    </List.Item>
-                )}
-            />
+            <MessagesList conversation={conversation} senderId={senderId} />
 
             <Space.Compact style={{ width: '100%' }}>
                 <Input

@@ -63,6 +63,8 @@ export const mockUsers: IUser[] = [
         inFriendRequest: [],
         outFriendRequest: [],
         unreadMessages: [],
+        avatarUrl:
+            'https://masterpiecer-images.s3.yandex.net/57fce0fe6e8611eea7405696910b1137:upscaled',
     },
     {
         id: 'Tue Mar 19 2024 14:42:45 GMT+0300 (Москва, стандартное время)',
@@ -236,6 +238,8 @@ export const mockUsers: IUser[] = [
         inFriendRequest: [],
         outFriendRequest: [],
         unreadMessages: [],
+        avatarUrl:
+            'https://i.pinimg.com/736x/71/81/14/7181149979b9cc345415d3b6465b192b.jpg',
     },
 ];
 
@@ -316,8 +320,8 @@ export const mockPosts: IPost[] = [
         id: '1710926059398',
         author: {
             id: 'Tue Mar 19 2024 14:41:24 GMT+0300 (Москва, стандартное время)',
-            username: 'Петя',
-            email: 'test@admin.com',
+            username: 'Ира Качалкина',
+            email: 'te@admin.com',
             password: '123',
             isOnline: true,
             friends: [],
@@ -325,14 +329,39 @@ export const mockPosts: IPost[] = [
             inFriendRequest: [],
             outFriendRequest: [],
             unreadMessages: [],
+            avatarUrl:
+                'https://masterpiecer-images.s3.yandex.net/57fce0fe6e8611eea7405696910b1137:upscaled',
         },
-        content: 'Пост ',
+        content:
+            'Не следует, однако забывать, что укрепление и развитие структуры обеспечивает широкому кругу (специалистов) участие в формировании позиций, занимаемых участниками в отношении поставленных задач. Равным образом постоянный количественный рост и сфера нашей активности позволяет оценить значение модели развития. Значимость этих проблем настолько очевидна, что консультация с широким активом играет важную роль в формировании существенных финансовых и административных условий.',
         createdAt: '2024-03-20T09:14:19.398Z',
-        imgUrls: [],
+        imgUrls: [
+            'https://kalix.club/uploads/posts/2023-03/1677759447_kalix-club-p-zastavka-rassvet-oboi-41.jpg',
+        ],
     },
 ];
 
 export const mockComments: IComment[] = [
+    {
+        author: {
+            id: '2024-03-20T09:11:56.622Z',
+            username: 'Педро Родригес',
+            email: 'test1@admin.com',
+            password: '123',
+            isOnline: true,
+            friends: [],
+            posts: [],
+            inFriendRequest: [],
+            outFriendRequest: [],
+            unreadMessages: [],
+            avatarUrl:
+                'https://i.pinimg.com/736x/71/81/14/7181149979b9cc345415d3b6465b192b.jpg',
+        },
+        createdAt: '2024-01-19T17:54:56.131Z',
+        id: '231',
+        content: 'Хорошо сказано. И картинка красивая',
+        postId: '1710926059398',
+    },
     {
         author: {
             id: '1',

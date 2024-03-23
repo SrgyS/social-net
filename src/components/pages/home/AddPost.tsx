@@ -1,4 +1,4 @@
-import { Button, Card, Input, Upload } from 'antd';
+import { Button, Card, Flex, Input, Upload } from 'antd';
 import { ChangeEvent, FC, useState } from 'react';
 import { UploadChangeParam, UploadFile } from 'antd/es/upload/interface';
 
@@ -57,23 +57,22 @@ const AddPost: FC = observer(() => {
                 placeholder='Что у вас нового?'
             />
             {isExpanded && (
-                <div style={{ marginTop: 8 }}>
-                    <Upload
-                        listType='picture'
-                        maxCount={3}
-                        onChange={(file) => handleUploadChange(file)}
-                    >
-                        <Button icon={<InboxOutlined />}>
-                            Загрузить изображение
+                <div style={{ marginTop: '1rem' }}>
+                    <Flex vertical align='start' gap={10}>
+                        {' '}
+                        <Upload
+                            listType='picture'
+                            maxCount={3}
+                            onChange={(file) => handleUploadChange(file)}
+                        >
+                            <Button icon={<InboxOutlined />}>
+                                Загрузить изображение
+                            </Button>
+                        </Upload>
+                        <Button type='primary' onClick={handleSubmit}>
+                            Отправить
                         </Button>
-                    </Upload>
-                    <Button
-                        type='primary'
-                        style={{ marginLeft: 8, marginTop: 8 }}
-                        onClick={handleSubmit}
-                    >
-                        Отправить
-                    </Button>
+                    </Flex>
                 </div>
             )}
         </Card>

@@ -5,6 +5,7 @@ import { FriendRequestList } from './FriendRequestList';
 import { FriendsList } from './FriendsList';
 import { getUsers } from '../../../utils/getUsers';
 import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router';
 import usersStore from '../../../store/users';
 
 export const Friends: FC = observer(() => {
@@ -14,9 +15,12 @@ export const Friends: FC = observer(() => {
     const usersSentRequest = authUser?.inFriendRequest;
     const friends = getUsers(authUser?.friends || []);
     const friendsRequests = getUsers(usersSentRequest || []);
+    const navigate = useNavigate();
+
     const handleConfirmFriendRequest = (id: string) => {
         if (authUser) {
             usersStore.confirmFriendRequest(authUser.id, id);
+            navigate('/friends');
         }
     };
     const handleCancelFriendRequest = (id: string) => {
