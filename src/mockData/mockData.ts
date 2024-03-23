@@ -335,12 +335,13 @@ export const mockPosts: IPost[] = [
 export const mockComments: IComment[] = [
     {
         author: {
-            id: '2t',
-            password: 'password',
-            username: 'Pete',
-            email: 'james@gmail.com',
-            avatarUrl: 'https://api.dicebear.com/7.x/adventurer-neutral/svg',
-            isOnline: true,
+            id: '1',
+            username: 'John',
+            password: '123',
+            email: 'test1@admin.com',
+            avatarUrl:
+                'https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663110850_6-mykaleidoscope-ru-p-spokoinii-chelovek-vkontakte-8.jpg',
+            isOnline: false,
             friends: [],
             inFriendRequest: [],
             outFriendRequest: [],
@@ -349,7 +350,7 @@ export const mockComments: IComment[] = [
         createdAt: '2024-03-19T17:54:56.131Z',
         id: '23',
         content: 'comment test',
-        postId: '2323',
+        postId: '1710872333965',
     },
     {
         author: {

@@ -13,10 +13,11 @@ export class CommentsStore {
     constructor() {
         makeObservable(this);
         this.loadComments();
+        console.log('CommentsStore initialized', this.allComments);
     }
     @observable allComments: IComment[] = [];
 
-    @action loadComments() {
+    @action loadComments = () => {
         const comments: IComment[] | null =
             loadDataFromLocalStorage(COMMENTS_KEY);
 
@@ -26,20 +27,19 @@ export class CommentsStore {
         } else {
             this.allComments = comments;
         }
-    }
-
+    };
     @action
-    addComment(comment: IComment) {
+    addComment = (comment: IComment) => {
         this.allComments.push(comment);
         saveDataToLocalStorage(COMMENTS_KEY, this.allComments);
-    }
+    };
 
-    @action deleteComment(commentId: string) {
+    @action deleteComment = (commentId: string) => {
         this.allComments = this.allComments.filter(
             (comment) => comment.id !== commentId
         );
         saveDataToLocalStorage(COMMENTS_KEY, this.allComments);
-    }
+    };
 }
 
 const commentsStore = new CommentsStore();

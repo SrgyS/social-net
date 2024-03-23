@@ -6,15 +6,7 @@ interface IBageProps {
 }
 
 export const BadgeWithCount = ({ count, title }: IBageProps) => (
-    <Badge
-        color='blue'
-        style={{
-            margin: '6px -15px',
-            cursor: 'pointer',
-        }}
-        count={count}
-        overflowCount={99}
-    >
+    <Badge color='blue' offset={[20, 6]} count={count} overflowCount={99}>
         {title}
     </Badge>
 );

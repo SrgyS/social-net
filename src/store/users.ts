@@ -18,7 +18,6 @@ export class UsersStore {
 
     @observable authUser: IUser | null = null;
     @observable allUsers: IUser[] = [];
-    @observable friendRequests: string[] = [];
     @observable messages: IMessage[] = [];
 
     @action loadUsers() {
@@ -27,27 +26,27 @@ export class UsersStore {
         saveDataToLocalStorage(USERS_KEY, this.allUsers);
     }
 
-    @action loadMessages() {
+    @action loadMessages = () => {
         const messages =
             loadDataFromLocalStorage<IMessage[]>(MESSAGES_KEY) || mockMessages;
         this.messages = messages;
         saveDataToLocalStorage(MESSAGES_KEY, this.messages);
-    }
+    };
 
-    @action setAuthUser(user: IUser) {
+    @action setAuthUser = (user: IUser) => {
         this.authUser = user;
-    }
+    };
 
-    @action clearAuthUser() {
+    @action clearAuthUser = () => {
         this.authUser = null;
-    }
+    };
 
-    @action addUser(user: IUser) {
+    @action addUser = (user: IUser) => {
         this.allUsers.push(user);
         saveDataToLocalStorage(USERS_KEY, this.allUsers);
-    }
+    };
 
-    @action addFriendRequest(currentUserId: string, friendId: string) {
+    @action addFriendRequest = (currentUserId: string, friendId: string) => {
         const [friendUser, currentUser] = this.getUsers(
             currentUserId,
             friendId
@@ -58,9 +57,12 @@ export class UsersStore {
             this.setAuthUser(currentUser);
         }
         saveDataToLocalStorage(USERS_KEY, this.allUsers);
-    }
+    };
 
-    @action confirmFriendRequest(currentUserId: string, friendId: string) {
+    @action confirmFriendRequest = (
+        currentUserId: string,
+        friendId: string
+    ) => {
         const [friendUser, currentUser] = this.getUsers(
             currentUserId,
             friendId
@@ -77,8 +79,8 @@ export class UsersStore {
             this.setAuthUser(currentUser);
             saveDataToLocalStorage(USERS_KEY, this.allUsers);
         }
-    }
-    @action deleteFriend(currentUserId: string, friendId: string) {
+    };
+    @action deleteFriend = (currentUserId: string, friendId: string) => {
         const [friendUser, currentUser] = this.getUsers(
             currentUserId,
             friendId
@@ -94,9 +96,9 @@ export class UsersStore {
             this.setAuthUser(currentUser);
             saveDataToLocalStorage(USERS_KEY, this.allUsers);
         }
-    }
+    };
 
-    @action cancelFriendRequest(currentUserId: string, friendId: string) {
+    @action cancelFriendRequest = (currentUserId: string, friendId: string) => {
         const [friendUser, currentUser] = this.getUsers(
             currentUserId,
             friendId
@@ -111,7 +113,7 @@ export class UsersStore {
             this.authUser = currentUser;
             saveDataToLocalStorage(USERS_KEY, this.allUsers);
         }
-    }
+    };
 
     @computed get isFriendRequestSent() {
         return (user: IUser) => {

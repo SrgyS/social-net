@@ -1,12 +1,9 @@
 import { Avatar, Button, Card, Flex, Image, Input, Space } from 'antd';
-import {
-    DeleteOutlined,
-    EditOutlined,
-    UserOutlined,
-} from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, UserOutlined } from '@ant-design/icons';
 import { IComment, IPost, IUser } from '../../../types';
 import React, { useState } from 'react';
 
+import { AddComment } from './AddComment';
 import CommentCard from './CommentCard';
 import { Link } from 'react-router-dom';
 import commentsStore from '../../../store/comments';
@@ -27,32 +24,14 @@ const PostCard: React.FC<IPostProps> = observer(
         const { author, content, createdAt, id } = post;
         const authUser = usersStore.authUser;
         const [showComments, setShowComments] = useState(false);
-        const [newComment, setNewComment] = useState('');
 
         const postComments = comments?.filter(
             (comment) => comment.postId === id
         );
 
-        const [hasComments, setHasComments] = useState(postComments.length > 0);
-
         const handleShowComments = () => {
             if (postComments.length > 0) {
                 setShowComments(!showComments);
-            }
-        };
-
-        const handleAddComment = () => {
-            if (newComment.trim() !== '') {
-                const newCommentData = {
-                    id: new Date().toISOString(),
-                    postId: post.id,
-                    author: currentUser,
-                    createdAt: new Date().toISOString(),
-                    content: newComment,
-                };
-                commentsStore.addComment(newCommentData);
-                setHasComments(true);
-                setNewComment('');
             }
         };
 
@@ -123,14 +102,15 @@ const PostCard: React.FC<IPostProps> = observer(
                                 color: '#1890ff',
                             }}
                         >
-                            {hasComments ? postComments.length : ''}
+                            {postComments.length > 0 && postComments.length}
                             <EditOutlined
                                 onClick={handleShowComments}
                                 style={{
                                     marginLeft: 5,
-                                    color: hasComments
-                                        ? '#1890ff'
-                                        : 'rgba(0, 0, 0, 0.25)',
+                                    color:
+                                        postComments.length > 0
+                                            ? '#1890ff'
+                                            : 'rgba(0, 0, 0, 0.25)',
                                 }}
                             />
                         </div>
@@ -157,44 +137,13 @@ const PostCard: React.FC<IPostProps> = observer(
                         ))}
                     </Card>
                 )}
-                {isAuth ? (
-                    <Card>
-                        <Card.Meta
-                            style={{ display: 'flex', width: '100%' }}
-                            avatar={
-                                <Avatar
-                                    src={currentUser.avatarUrl}
-                                    style={{ backgroundColor: '#87d068' }}
-                                    icon={<UserOutlined />}
-                                />
-                            }
-                            description={
-                                <Flex gap={10}>
-                                    <Space.Compact style={{ width: '100%' }}>
-                                        <Input
-                                            placeholder='Добавить комментарий...'
-                                            value={newComment}
-                                            onChange={(e) =>
-                                                setNewComment(e.target.value)
-                                            }
-                                            onPressEnter={handleAddComment}
-                                        />
-                                        <Button
-                                            type='primary'
-                                            onClick={handleAddComment}
-                                            disabled={
-                                                !isAuth ||
-                                                newComment.trim() === ''
-                                            }
-                                        >
-                                            Отправить
-                                        </Button>
-                                    </Space.Compact>
-                                </Flex>
-                            }
-                        />
-                    </Card>
-                ) : null}
+                {isAuth && (
+                    <AddComment
+                        currentUser={currentUser}
+                        postId={post.id}
+                        isAuth={isAuth}
+                    />
+                )}
             </>
         );
     }

@@ -15,7 +15,7 @@ export class PostsStore {
     }
     @observable allPosts: IPost[] = [];
 
-    @action loadPosts() {
+    @action loadPosts = () => {
         const posts: IPost[] | null = loadDataFromLocalStorage(POSTS_KEY);
         if (!posts) {
             this.allPosts = mockPosts;
@@ -23,17 +23,17 @@ export class PostsStore {
         } else {
             this.allPosts = posts as IPost[];
         }
-    }
+    };
 
-    @action addPost(post: IPost) {
+    @action addPost = (post: IPost) => {
         this.allPosts.push(post);
         saveDataToLocalStorage(POSTS_KEY, this.allPosts);
-    }
+    };
 
-    @action deletePost(postId: string) {
+    @action deletePost = (postId: string) => {
         this.allPosts = this.allPosts.filter((post) => post.id !== postId);
         saveDataToLocalStorage(POSTS_KEY, this.allPosts);
-    }
+    };
 }
 
 const postsStore = new PostsStore();
