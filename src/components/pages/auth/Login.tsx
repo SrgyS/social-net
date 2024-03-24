@@ -10,7 +10,8 @@ const Login = ({ onSubmit }: IAuthProps) => {
     const onFinish = (values: ILoginFormValues) => {
         const foundUser = usersStore.allUsers.find(
             (user) =>
-                user.email === values.email && user.password === values.password
+                user.email.toLowerCase() === values.email.toLowerCase() &&
+                user.password === values.password
         );
         if (foundUser) {
             usersStore.setAuthUser(foundUser);

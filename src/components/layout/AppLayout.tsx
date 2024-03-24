@@ -41,6 +41,8 @@ const AppLayout = observer(() => {
             </Header>
             <Layout>
                 <Sider
+                    breakpoint='md'
+                    collapsedWidth={40}
                     width='25%'
                     style={{ background: colorBgLayout, padding: '30px' }}
                 >

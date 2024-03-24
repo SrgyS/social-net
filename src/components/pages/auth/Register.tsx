@@ -13,7 +13,7 @@ const Register = ({ onSubmit }: IAuthProps) => {
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const onFinish = (values: IAuthFormValues) => {
         const existingUser = usersStore.allUsers.find(
-            (user) => user.email === values.email
+            (user) => user.email.toLowerCase() === values.email.toLowerCase()
         );
 
         if (existingUser) {
@@ -37,6 +37,7 @@ const Register = ({ onSubmit }: IAuthProps) => {
                 unreadMessages: [],
                 avatarUrl: avatarUrl[0] || '',
             };
+            console.log('user', newUser);
             usersStore.addUser(newUser);
             usersStore.setAuthUser(newUser);
             onSubmit();
@@ -90,17 +91,20 @@ const Register = ({ onSubmit }: IAuthProps) => {
                             message: 'Пожалуйста, введите пароль',
                         },
                     ]}
+                    hasFeedback
                 >
                     <Input.Password />
                 </Form.Item>
 
                 <Form.Item
-                    name='confirmPassword'
+                    name='confirm'
                     label='Подтвердите пароль'
+                    dependencies={['password']}
+                    hasFeedback
                     rules={[
                         {
                             required: true,
-                            message: 'Пожалуйста, подтвердите пароль',
+                            message: 'Пожалуйста, введите пароль',
                         },
                         ({ getFieldValue }) => ({
                             validator(_, value) {
